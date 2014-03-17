@@ -1,0 +1,53 @@
+/* 
+
+-Ankit_Vadehra
+Iherited from dudes on the web.
+*/
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p,img, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td { margin: 0px; padding: 0px; border: 0px none; outline: 0px none; font-weight: inherit; font-style: inherit; font-size: 100%; font-family: inherit; vertical-align: baseline; }
+* { font-size: 100.01%; }
+:focus { outline: 0px none; }
+body { text-align: center; }
+ul, ol { list-style-position: inside; }
+img { display: inline-block; }
+@font-face {
+	font-family: "CodeLightRegular";
+	font-style: normal;
+	font-weight: normal;
+	src: local("☺"), url('code-light-webfont.woff') format("woff"), url('code-light-webfont.ttf') format("truetype"), url('code-light-webfont.svg') format("svg");
+}
+@font-face {
+	font-family: "CodeBoldRegular";
+	font-style: normal;
+	font-weight: normal;
+	src: local("☺"), url('code-bold-webfont.woff') format("woff"), url('code-bold-webfont.ttf') format("truetype"), url('code-bold-webfont.svg') format("svg");
+}
+#home a:link, #home a:visited, a:link, a:visited { color: rgb(0, 0, 0); text-decoration: none; }
+.nav:link, .nav:visited { color: rgb(204, 204, 204); }
+#home a:hover, #home a:active { color: rgb(4, 162, 191); }
+#about a:hover, #about a:active, #about h2 { color: rgb(184, 34, 7); }
+#about p a:link, #about p a:visited { color: rgb(184, 34, 7); }
+#about p a:hover, #about p a:active { color: rgb(0, 0, 0); }
+#networks a:hover, #networks a:active, #networks h2 { color: rgb(126, 150, 12); }
+#contact a:hover, #contact a:active, #contact h2 { color: rgb(148, 69, 189); }
+#contact ul a:link, #contact ul a:visited, #networks ul a:link, #networks ul a:visited { display: block; }
+h1, h2 { font-family: "CodeBoldRegular","Trebuchet MS",Arial,Helvetica,sans-serif; }
+ul { list-style: none outside none; margin: 0px; padding: 0px; }
+body { background: url('bg.png') repeat scroll 0% 0% rgb(19, 194, 226); color: rgb(51, 51, 51); font: 36px/45px "CodeLightRegular","Trebuchet MS",Arial,Helvetica,sans-serif; }
+#container { background: url('bg1.png') no-repeat scroll center -110px transparent; margin: 0px auto; text-align: left; height: 900px; width: 1000px; }
+#contentContainer { padding: 100px 263px 0px; }
+#content { height: 450px; overflow: hidden; width: 489px; }
+#pages { height: 1200px; width: 1200px; }
+#pages .page { height: 450px; float: left; margin: 0px 20px 20px 0px; padding: 0px; width: 489px; }
+#monkey { }
+#monkey a:link, #monkey a:visited { background: url('bg.png')  repeat scroll 0% 0% rgb(255, 255, 255); display:;}
+#monkey a:hover, #monkey a:active { background-color: rgb(255, 255, 255); }
+#home, h2 { font-size: 100px; line-height: 92px; }
+#home h1 a:link, #home h1 a:visited { color: rgb(6, 160, 204); cursor: default; }
+#about h2 { padding-left: 5px; }
+#about p { font-size: 26px; line-height: 24px; margin-bottom: 18px; }
+#networks li { overflow: hidden; }
+#contact li {  }
+#contact span { display: none; float: right; }
+#contact a:hover span { display: block; }
+#footer { color: rgb(0, 0, 0); font: 15px/20px "Trebuchet MS",Arial,Helvetica,sans-serif; padding-top: 25px; text-align: center; opacity: 10; }
