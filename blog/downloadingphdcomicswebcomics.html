@@ -24,7 +24,34 @@ Downloading PHDComics WebComics
 15/01/2015
   </p>
   <p>
-For so long i've wanted to download all of the <a href="http://phdcomics.com/comics.php"> PHDComics</a> webcomics. For those of you who don't know what it is, PHDComics are a series of web comics by Jorge Cham that depict the common idiosyncrasies of Graduate School and the Grad Student's life. They are pretty Hilarious. :D<br> Anyways, so i finally sat to write a simple script that could download all of the comics for me. Sounds simple right? A simple loop, culr/wget and presto, all images downloaded. Nopes.!! Took me a good 1 Hour and 15 minutes to figure stuff out and write it down.<h2>The Problem</h2>I'm not sure why or how, but, the PHDComics web servers have somehow banned the normal tools like: "wget", "curl/libcurl", "lynx" etc from accessing their servers. They just send realy awesome 403-Errors. So, it seemed that Python was the only way to go. Python with "urllib" and "BeautifulSoup" would have easily scraped everything in no time. But, 15 minutes in and i realised that there's this tool called <b><a href="http://w3m.sourceforge.net/" > w3m </a></b> which is a terminal browser like lynx, and while it's not that popular, it is capable of dumping the source code of a website, which is cool..
+For so long i've wanted to download all of the <a href="http://phdcomics.com/comics.php"> PHDComics</a> webcomics. For those of you who don't know what it is, PHDComics are a series of web comics by Jorge Cham that depict the common idiosyncrasies of Graduate School and the Grad Student's life. They are pretty Hilarious. :D<br> Anyways, so i finally sat to write a simple script that could download all of the comics for me. Sounds simple right? A simple loop, culr/wget and presto, all images downloaded. Nopes.!! Took me a good 1 Hour and 15 minutes to figure stuff out and write it down.<h2>The Problem</h2>I'm not sure why or how, but, the PHDComics web servers have somehow banned the normal tools like: "wget", "curl/libcurl", "lynx" etc from accessing their servers. They just send realy awesome 403-Errors. So, it seemed that Python was the only way to go. Python with "urllib" and "BeautifulSoup" would have easily scraped everything in no time. But, 15 minutes in and i realised that there's this tool called <b><a href="http://w3m.sourceforge.net/" > w3m </a></b> which is a terminal browser like lynx, and while it's not that popular, it is capable of dumping the source code of a website, which is cool..<h2>The Solution..</h2>Now, that i found w3m, i started messing with it, and it was able to successfully connect and send cookies to the PHDComics host. Now, the only problem with w3m is that if you try to open an image file directly with it, it gets saved in the root directory under .w3m folder with some random filename, and there is no way to control the output directory. Not only this it also opens the image file after downloading in firefox/iceweasel. Now, i have no problem in renaming files. A simple <b>ls</b> command should suffice but, there is NO-WAY in hell i'm closing 1776 tabs in Iceweasel. No Sir. NO! So the only thing left to do was to call in a little bit of Python to make downloading and renaming of the file a little bit easier. Also, since i'm getting the source code for the file, i don't require BeautifulSoup module and hence the Python Distribution(..out of the box) should work without any extra module support.<br>Now for the code:
+<code><pre>
+for i in {1..1776}
+do
+  w3m -dump_source "http://phdcomics.com/comics/archive.php?comicid="$i>test.txt
+  file_line=$(grep "&lt;td bgcolor=#FFFFFF align=center>&lt;img id=comic name=comic src=http://www.phdcomics.com/comics/archive/" test.txt)
+  x="${file_line#*src=}"
+  x="${x%% *}"
+  python test.py $i $x
+  echo -e "Recieved Image: "$i
+  echo -e " " 
+done</code></pre>
+Here, -dump_source tag very succesfully ports the whole HTML static source to a test TXT file. Now, PHDComics have a very simle page structure and the image is always linked after the same tag always ie:
+<code>
+"&lt;td bgcolor=#FFFFFF align=center>&lt;img id=comic name=comic src=http://www.phdcomics.com/comics/archive/"</code>
+followed by the image name. This makes it very easy to "grep" the line containing these things. After that there is just very simple RegEX that is awesome in BASH.
+<code>
+x="${file_line#*src=}"</code>Succesfully removes everything before and including "src=" from the URL.
+<code>x="${x%% *}"</code>Removes everything after the URL. Hence, after this, we are just left with the URL of the image file in the variable x.This, along with the counter ie. "i" is passed to the Python Program "test.py":
+<code><pre>
+import urllib
+import sys
+count=sys.argv[1]
+url=sys.argv[2]
+urllib.urlretrieve(url,"%s.gif"%count)
+</code></pre>
+This saves all of the images in the directory, in a proper sequential order.
+An hour to write the code. 35 minutes to download all the files(..1776 images), and now i'm of to covert the images to send it to my Kindle. Whew!!<br>BASH has this raw power, which i love. SO-SO much.!!
   </p>
   </div>
   <div class=footer>
