@@ -1,0 +1,37 @@
+<html>
+  <head>
+    <meta charset=utf-8>
+    <title>Blog |-Ankit Vadehra</title>
+    <link rel="stylesheet" href="style.css" type="text/css">
+   </head>
+  <body>
+    <div class=container>
+      <div class=header>
+        <a href="http://ankit-vadehra.co.nr/">Ankit Vadehra</a> (Thoughts and Musings.)
+      </div>
+      <div class=navigation>
+        <ul>
+          <li><a href="/blog/blog.html">blog</a>
+          <li><a href="/blog/projects.html">projects</a>
+          </ul>
+      </div>
+      <div class=body>
+      <!--Enter Title in Line(21). Date on Line(24) Content on(27)-->
+  <h1 class="title">
+Downloading PHDComics WebComics
+  </h1>
+  <p class=date>written on 
+15/01/2015
+  </p>
+  <p>
+For so long i've wanted to download all of the <a href="http://phdcomics.com/comics.php"> PHDComics</a> webcomics. For those of you who don't know what it is, PHDComics are a series of web comics by Jorge Cham that depict the common idiosyncrasies of Graduate School and the Grad Student's life. They are pretty Hilarious. :D<br> Anyways, so i finally sat to write a simple script that could download all of the comics for me. Sounds simple right? A simple loop, culr/wget and presto, all images downloaded. Nopes.!! Took me a good 1 Hour and 15 minutes to figure stuff out and write it down.<h2>The Problem</h2>I'm not sure why or how, but, the PHDComics web servers have somehow banned the normal tools like: "wget", "curl/libcurl", "lynx" etc from accessing their servers. They just send realy awesome 403-Errors. So, it seemed that Python was the only way to go. Python with "urllib" and "BeautifulSoup" would have easily scraped everything in no time. But, 15 minutes in and i realised that there's this tool called <b><a href="http://w3m.sourceforge.net/" > w3m </a></b> which is a terminal browser like lynx, and while it's not that popular, it is capable of dumping the source code of a website, which is cool..
+  </p>
+  </div>
+  <div class=footer>
+    <p>Blog Powered using <a href="">CaffeinePost</a></p>
+    <p>You can find me at:</p>
+    <p><a href="http://github.com/ankitvad">GitHub</a>, <a href="http://www.linkedin.com/in/ankitvad">LinkedIn</a>, <a href="https://www.facebook.com/ankit.vadehra">Facebook</a>,<br><a href="https://plus.google.com/+AnkitVadehr%C4%81">Google+</a>, <a href="http://www.quora.com/Ankit-Vadehra">Quora</a>, <a href="http://www.twitter.com/ankitvad">Twitter</a></p>
+  </div>
+  </div>
+  </body>
+</html>
