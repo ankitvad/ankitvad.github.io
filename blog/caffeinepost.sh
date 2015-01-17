@@ -80,12 +80,19 @@ add_label_post(){
 	sed "24i$date_entry" blog2.html > "$nospacesmallcaps.html"
 	cp "$nospacesmallcaps.html" blog2.html
 	#Now Opening Up VIM to save the post..
+	#HTMLPAGE="$nospacesmallcaps.html"
 	vim post.txt
-	POST=$(<post.txt)
+	#Switching to python for post-entry as well so as to
+	#ensure all syntax entry's.. "sed" failed me man..
+	#Really Sad...
+	python writepostentry.py
+	cp blog2.html "$nospacesmallcaps.html"
+	#POST=$(<post.txt)
 	#Now Adding The stuff in the HTML File..
-	sed "27i$POST" blog2.html > "$nospacesmallcaps.html"
+	#sed "27i$POST" blog2.html > "$nospacesmallcaps.html"
 	#Removing Post.txt for next time.
 	echo -e "Cleaning Up Temporary Files.."
+	rm post.txt
 	rm blog2.html
 	rm blog_entry_test.txt
 	rm blog_entry_test2.txt
@@ -96,4 +103,4 @@ edit_post(){
 }
 #Initialise the Script...
 welcome
-auth
+#auth
