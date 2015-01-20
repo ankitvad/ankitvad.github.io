@@ -92,7 +92,7 @@ add_label_post(){
 	#sed "27i$POST" blog2.html > "$nospacesmallcaps.html"
 	#Removing Post.txt for next time.
 	echo -e "Cleaning Up Temporary Files.."
-	rm post.txt
+	#rm post.txt
 	rm blog2.html
 	rm blog_entry_test.txt
 	rm blog_entry_test2.txt
