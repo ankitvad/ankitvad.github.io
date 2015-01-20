@@ -1,2 +1,368 @@
-ffdfsdfsdf:wq
+This semester has been pretty sucky, till now. Research topics are pretty vague and uncertain. The projects are fun and stuff, but the "Procrastination" is upto a whole new level, oh yeah. Spent a whole day making a <a href="downloadingphdcomicswebcomics.html">PHDComic scraper</a>, lol. Well, but that was fun too. :D Anyways, there's this Repo. going really-really strong in the GitHub trending section: <a href="https://github.com/hgarc014/git-game">Git-Game</a>, and boy-oh-boy did i wanna finish that thing. You know, it isn't much but atleast it has a nice puzzle-quizy fee t it. So after keeping the game open in my Iceweasel tab for about 3-4 days, i finally completed it about 3 days ago, and it's much-much better than all the other Git-Learning games out there, and to mark that milestone, i gotta write down the process for the game. Here goes nothing..
+<h2>The Game Process..</h2>
+<b>tl;dr: If you're reading this, you'll be much better of checking out the original <a href="https://github.com/hgarc014/git-game">Game</a> on GitHub.."Spoiler Alert" </b><br>
+1)So the repo. tells you to clone it into your directory using git. I'm assuming that all of you have "git" and other dependencies installed on your system. If Not: Please, do check out the Guides present online. Now,<pre><code>
+git clone "https://github.com/hgarc014/git-game"
+</pre></code>
+This, creates a proper clone of the repository in your current working directory. Now, the Readme.md file contains all the information and mentions, explicitly, the fact that all future "hints" will be given in the Readme files. Now the first Excercise/Hint says:<br>
+<code><pre>
+You should always check the README.md file for your next clue!
+
+Your first task is to checkout the commit whose commit message is the answer to this question:
+
+When a programmer is born, what is the first thing he/she learns to say?</pre</code>
+Now the answer is obviously<b> "Hello World"</b>, or some form of it, so this was pretty straight-forward. Now, all we need is the log of all the commits, so that we can probably go to a previous commit.
+<pre><code>
+$ git log
+
+commit 25bfa08b92de73c9ecfe46a35a537684d26d9171
+Author: Henry Garcia <hgarc014@ucr.edu>
+Date:   Tue Jan 13 17:32:30 2015 -0800
+
+    added information for people that don't know git
+
+commit 27e9786d8a71d73c06f46593293b3865015596ac
+Merge: bc9641f 3893960
+Author: Henry Garcia <hgarc014@ucr.edu>
+Date:   Thu Jan 8 11:28:39 2015 -0800
+
+    Merge pull request #6 from riqpe/master
+    
+    Corrected description of difficulty progression
+
+commit 3893960db081abcd2a0944dd692a1d2c16980d46
+Author: riqpe <rsilvola@gmail.com>
+Date:   Thu Jan 8 14:31:44 2015 +0100
+
+    Corrected description of difficulty progression
+    
+    Changed "each one harder than the next" to "each one harder than last" to indicate increasing difficulty
+
+commit bc9641f9970b073d2f39a8b6414dc5c8949690c5
+Author: Henry Garcia <hgarc014@ucr.edu>
+Date:   Fri Dec 19 09:29:14 2014 -0800
+
+    updated README
+
+commit 9b9380ba22cd3f1d0974abeea9738fa60ef96a2e
+Author: Henry Garcia <hgarc014@ucr.edu>
+Date:   Fri Dec 19 09:24:33 2014 -0800
+
+    Hello World!
+
+commit 8cafb7c87b129686da362b14c3f3c750c1fe4bf5
+Author: Henry Garcia <hgarc014@ucr.edu>
+Date:   Sun Nov 30 18:29:35 2014 -0800
+
+    Initial commit
+</pre></code>
+Now, the commit "9b9380ba22cd3f1d0974abeea9738fa60ef96a2e" has the entry as "Hello World!". So, let's just see what it gets us.
+<pre><code>
+$ git checkout 9b9380ba22cd3f1d0974abeea9738fa60ef96a2e
+Note: checking out '9b9380ba22cd3f1d0974abeea9738fa60ef96a2e'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by performing another checkout.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -b with the checkout command again. Example:
+
+  git checkout -b new_branch_name
+
+HEAD is now at 9b9380b... Hello World!
+</pre></code>
+Well, that was lucky :) Atleast we got something. Now, time to check the new README.md file obtained..<pre><code>
+$ cat README.md
+git-game
+========
+
+Hello World!
+
+It looks like you have some knowledge about traversing commits!
+Well, let's get this party started!
+
+We want to get to a branch whose name is the answer to this riddle: 
+I am a creature that is smaller than man, but many times more in number. 
+In code, my appearance can be subtle and no matter where I am found, I am unwanted. 
+
+What am I?
+</pre></code>
+Voila, there's the second clue. Now, i won't lie. The "I am unwanted." part of the clue just kept making me think that the answer must be "comment". There was this awesome thread on StackOverflow about some of the most interesting comments people have come across over the years. There was this particular "insightful" answer:
+<pre><code>
+//Sometimes, I think that the compiler just ignores me.
+</pre></code>
+Keeping that in mind, i just kept thinking that "comment" would be the answer. But, the "I am a creauture that is smaller than man, but many times more in number" kept throwing me off-base. Also, well "comment" was not giving me a right answer, lol :P So, naturally it had to be something else. It took me a lot of time to finally realise that the answer is "bug". Just, plain simple "bug". :D I was writing down code for my Software Engineering class project and BOOM, it just jumped out at me from my Python Interpreter, the thing i hate the most: BUGS :D So, i just tried switching to that branch and:
+<pre><code>
+$ git checkout bug
+Previous HEAD position was 9b9380b... Hello World!
+Branch bug set up to track remote branch bug from origin.
+Switched to a new branch 'bug'
+</pre></code>
+#Now checking out the new README.md 
+<pre><code>
+$ cat README.md
+git-game
+========
+
+Congratulations, it looks like you found the "bug."
+When you work with other programmers on the same project, bugs are bound to appear.
+One way to create bugs is by changing code that you did not write without understanding what the code is doing.
+
+Sometimes we like to blame others for introducing bugs in our code. 
+Think you can find out who introduced a bug into our file cool.cpp? 
+We think he had something to do with the development of git.
+And from what we hear he also made a branch under his name.
+Checkout to that branch after you find out who the culprit is.
+~$ ls
+cool.cpp  LICENSE  README.md  remember
+</pre></code>
+Now, do not, and just DO-NOT, open and try to see the "remember" file. It contains a LOT of random keywords and strings meaning nothing. Now, there is a C++ file in the directory and the readme tells us that there is something or someone that has messed up with the source code of the file. 
+It also tells us that someone who had something to do with git's development might just be responsible for it. It has to be something to do with Linus Torvalds, 'cause he did develop the git version control. So, we checkout who has worked on this particular branch.
+<pre><code>
+$ git log --graph
+* commit d4827d27af0af2fce8575230486efc3d89513d9d
+| Author: Henry Garcia <hgarc014@ucr.edu>
+| Date:   Fri Dec 19 10:01:21 2014 -0800
+| 
+|     updated remember
+|  
+* commit b2471d3681090a2187d1598f07cdce97dcd62205
+| Author: Henry Garcia <hgarc014@ucr.edu>
+| Date:   Fri Dec 19 09:33:43 2014 -0800
+| 
+|     updated README
+|  
+* commit 19e12509e302a3f00a9bb082c18cd90eb4a93887
+| Author: Henry Garcia <hgarc014@ucr.edu>
+| Date:   Fri Dec 12 18:44:52 2014 -0800
+| 
+|     updated README
+|  
+* commit 3922a6d86ec4b0ea00c7b7414e96ffd3b2f65f45
+| Author: LinusTorvalds2014 <linustorvalds2014@gmail.com>
+| Date:   Tue Dec 9 12:37:10 2014 -0800
+| 
+|      update
+|  
+* commit 837781f88af8f64dbdd51bf0ba402d9c1f123556
+| Author: Henry Garcia <hgarc014@ucr.edu>
+| Date:   Tue Dec 9 11:47:34 2014 -0800
+| 
+|     added remember
+|  
+* commit ce59bbfd5b04ece742e799c68bf94af2c46281d4
+| Author: Henry Garcia <hgarc014@ucr.edu>
+| Date:   Mon Dec 8 18:22:35 2014 -0800
+| 
+|     added cool.cpp and updated README
+|  
+* commit 8cafb7c87b129686da362b14c3f3c750c1fe4bf5
+  Author: Henry Garcia <hgarc014@ucr.edu>
+  Date:   Sun Nov 30 18:29:35 2014 -0800
+  
+      Initial commit
+</pre></code>
+And, there it is. A commit by someone called: LinusTorvalds2014. This is what we want. Now to see who has worked on the cool.cpp source code file. The hint is actually in the word "blame" in the README file, since there is an existing git attribute called -blame that can be used to find out who has ever changed and or done anything on a file. So:
+<pre><code>
+$ git blame cool.cpp
+ce59bbfd (Henry Garcia      2014-12-08 18:22:35 -0800  1) #include <iostream>
+ce59bbfd (Henry Garcia      2014-12-08 18:22:35 -0800  2) 
+ce59bbfd (Henry Garcia      2014-12-08 18:22:35 -0800  3) using namespace std;
+ce59bbfd (Henry Garcia      2014-12-08 18:22:35 -0800  4) 
+ce59bbfd (Henry Garcia      2014-12-08 18:22:35 -0800  5) int main()
+ce59bbfd (Henry Garcia      2014-12-08 18:22:35 -0800  6) {
+ce59bbfd (Henry Garcia      2014-12-08 18:22:35 -0800  7)    string mesg = "Hello! Who are you?";
+ce59bbfd (Henry Garcia      2014-12-08 18:22:35 -0800  8)    string input;
+ce59bbfd (Henry Garcia      2014-12-08 18:22:35 -0800  9)    cout << mesg << endl;
+ce59bbfd (Henry Garcia      2014-12-08 18:22:35 -0800 10)    cin >> input;
+3922a6d8 (LinusTorvalds2014 2014-12-09 12:37:10 -0800 11)    cout << "Loops are fun!" << endl;
+3922a6d8 (LinusTorvalds2014 2014-12-09 12:37:10 -0800 12)    while(1);
+ce59bbfd (Henry Garcia      2014-12-08 18:22:35 -0800 13)    string reply = "Well, " + input + ", we hope you are having fun with our git-game!";
+ce59bbfd (Henry Garcia      2014-12-08 18:22:35 -0800 14)    cout << reply << endl; 
+ce59bbfd (Henry Garcia      2014-12-08 18:22:35 -0800 15) }
+ce59bbfd (Henry Garcia      2014-12-08 18:22:35 -0800 16)
+</pre></code>
+Now,the problem is very clearly with the infinite-loop present, and we know from the git blame that, Linus did do that. Now, the README tells us to switch the the branch named LinusTorvalds2014.
+<pre><code>
+$ git checkout LinusTorvalds2014
+Branch LinusTorvalds2014 set up to track remote branch LinusTorvalds2014 from origin.
+Switched to a new branch 'LinusTorvalds2014'
+
+~$ cat README.md
+git-game
+========
+
+Looks like you found the branch of the evil Mastermind.
+Things may start to get a little more challenging...
+
+The next clue you are looking for --
+   is in a file you choose to ignore!
+</pre></code>
+This clue, took some time. I kept fluttering here and there, checking out the LICENSE file, as people tend to ignore this thing. But is was only after i opened thunar(..my file manager) that i saw the .gitignore folder. Any folder starting with a "." is automatically considered as hidden, and hence doesn't show up in ls. We need to use:
+<pre><code>
+~$ ls -a
+.  ..  .git  .gitignore  LICENSE  README.md
+</pre></code>
+Which shows the hidden folders and files as well. And, the .gitignore was what i was looking for. Now we checkout the "ignored" file.
+<pre><code>
+$ cat .gitignore
+# welcome to the ignore file!!
+
+# This file is hidden by default, 
+# but did you know you have some branches that aren't shown to you,
+# when you check the list of branches?
+#
+# For your next clue...
+# Which abstract data type tends to implement sets and maps?? 
+# The answer is the same answer to this riddle:
+#
+#   I am both mother and father.
+#   I am seldom still
+#   yet I never wander.
+#   I never birth nor nurse.
+#   
+#   What am I?
+#
+# Afterwards... well, you
+# know, checkout to the answer. 
+
+*.rem
+a.out
+</pre></code>
+I'm not sure how i got this answer. No idea. But, the "i am seldom still, yet i never wander" helpd me out a bit. The F.R.I.E.N.D.S. episode where Joey's selling out Christmas Tree and he tells Phoebe that the tree is fulfilling their christmas destiny, and then Chandler chimes in that the christmas is the only time that ther trees get to roam around New York. This is where the idea came into my head and well, i checked it out and the branch was "tree".
+<pre><code>
+$ git checkout tree
+Branch tree set up to track remote branch tree from origin.
+Switched to a new branch 'tree'
+~$ ls
+LICENSE  nextclue_input.cpp  outputclue.sh  README.md
+~$ cat README.md
+git-game
+========
+
+Welcome to the "tree" branch. 
+Looks like good ol' Linus modified the "nextclue_input.cpp" file. 
+Normally, when ran with the shell script "outputclue.sh", the "nextclue_input.cpp" file would give us the next hint.
+
+Maybe, you should try running the shell script with the "nextclue_input.cpp" file and see what happens...
+
+You can run the script by running the command "./outputclue.sh FILE" .
+If you are on Windows, it's okey to use `git-bash` that is installed with [msysgit](https://msysgit.github.io/).
+</pre></code>
+I really got derailed at this point. I have no idea how, i solved this part. I may be wrong, i may be right, who knows. I just ran the shell script and saw the O/P:
+<pre><code>
+~$ ./outputclue.sh nextclue_input.cpp
+Linus has been here...
+I love messing with these amateur programmers!!
+If you want some real fun, then you should try resolving a conflict between this branch (tree) an    d code4life.
+I introduced a little bug that you should fix in the conflict. >:)
+After you merge these 2 files you should run the shell script again!!
+ 
+Good Luck!!!
+</pre></code>
+Then i checked out the .cpp file, which showed that there was an infinite while(1) loop running. I just opened it up in VIM, removed that part, and ran the SHELL code again:
+<pre><code>
+~$ ./outputclue.sh nextclue_input.cpp
+Well, congratulations!! You fixed my conflict!!
+If you would like to continue, then you should checkout to the mouse branch!!
+</pre></code>
+Now before i could move to the next branch, i had to commit all changes made by me, and so:
+<pre><code>
+~$ git add .
+~$ git commit -m "Updating Stuff."
+[tree 9a2ba6a] Updating Stuff.
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+</pre></code>
+Now switching to the next branch called "mouse".
+<pre><code>
+~$ git checkout mouse
+Branch mouse set up to track remote branch mouse from origin.
+Switched to a new branch 'mouse'
+~$  ls
+LICENSE  README.md  remember
+~$ cat README.md
+git-game
+========
+
+Looks like you resolved your conflict and found our branch, congrats!! 
+
+Hmm...it seems this branch has a file that was seen before in another branch. 
+Do you "remember" what it is?
+I think this file has something to do with the next clue, but it seems to be very ugly looking. 
+Maybe if we compare the "diff"erences between this file and the file from before we'll know where to go next...
+</code></pre>
+Now, i vividly remembered the remember file i had gotten earlier on, on a different branch. This README just wanted to checkout the difference between that and the readme in this branch. So we compare the difference between the file in the "mouse" and "bug" branch.
+<pre><code>
+~$ git diff mouse bug -- remember
+</pre></code>
+Which gave me the difference along with a lot of random strings containing literals. The thing that jumped out clearlly was:
+<pre><code>
+-Sn The next clue is: YtrydjKsYqebDoI3h bTINUeV6 pTVY8jnK2re HRwwNy25Ps6 u0YChCo5Jtw N3xkH3G nx aGo6yQTW RVZMsf3xk tBL0sG9GAR HQbyGYdqs i6dx1fyIPGJVciz8Z1NzdrvGE CKgkFauX
++Sn In a branch named: Henry YtrydjKsYqebDoI3h bTINUeV6 pTVY8jnK2re HRwwNy25Ps6 u0YChCo5Jtw N3xkH3G nx aGo6yQTW RVZMsf3xk tBL0sG9GAR HQbyGYdqs i6dx1fyIPGJVciz8Z1NzdrvGE C
+</pre></code>
+So. i jumped to the branch "Henry". Easy right? NOPES. Turns out that Henry is also a Tag that has been saved. So the checkout command automatically jumps to that instance. To remove this from happening we need to remove this tag. Now, we can either create a new tag related to the Henry keyword or just delete it, and then proceed. I thought to create a new one, since deleting important tags are seldom good. So:
+<pre><code>
+~$ git tag HenryPoop && git tag -d Henry
+Deleted tag 'Henry' (was b8ad33a)
+~$ git checkout Henry
+Branch Henry set up to track remote branch Henry from origin.
+Switched to a new branch 'Henry'
+~$cat README.md
+git-game
+========
+
+Welcome!! It looks like you made it to my Branch!!!
+Generally you want to refrain from making tags the same name as branches, unless you have a good reason.
+The tag is more like the stable release.
+While the branch is more like the in progress feature, which will be added soon.
+
+You're almost done!! Excited?? Hope you are! You have one more thing to do!
+
+Now its time to update the master branch, updating is really useful when you fork a repository and your forked repo starts to get behind on commits. The repository to update from is: https://github.com/drami025/git-game.git
+
+Don't cheat!!
+</pre></code>
+Now is the time to update the Updater list as given in the README.md file.
+<pre><code>
+~$ git remote add updatefromhere git@github.com:drami025/git-game.git
+~$ git pull updatefromhere master
+</pre></code>
+Which updates the whole directory and then gets a new README.md file which says :D
+<pre><code>
+ cat README.md
+Git Game Finish Line
+==========
+
+If you did not fork this repository from the terminal, then we are disappointed in you!!
+=======
+
+However, if you did, then great Job!!
+You completed our Git Game!
+
+
+Well you:
+
+- viewed previous commits using "git log"
+- traversed to previous commits
+- checked out to different branches
+- ran "git blame" to see who made changes to a file
+- ran the diff command to see differences between branches
+- saw what .gitignore included and how it works
+- resolved merged conflicts
+- saw issues with naming tags and branches the same name
+- updated a local repository from a remote repository
+ 
+Version control systems like git are extremely important tools to learn and use, 
+Especially when collaborating on projects with other developers. 
+It is our hope that you continue to practice your git skills so that you can one day become the ultimate git master!
+
+Thanks for playing!
+</pre></code>
+It also had details of an email address, which i could report to after completion, which i did, and i got an awesome completion badge :<br><center><img src="gitgame.png"></center><br>
+You have-to try out this game. It was an awesome learning experience.
+
+
+
+
 
