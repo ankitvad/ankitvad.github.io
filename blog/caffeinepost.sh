@@ -103,4 +103,4 @@ edit_post(){
 }
 #Initialise the Script...
 welcome
-auth
+#auth
