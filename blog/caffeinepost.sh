@@ -103,4 +103,8 @@ edit_post(){
 }
 #Initialise the Script...
 welcome
-#auth
+echo -e "Do you want to Push to GitHub?(y/n) :"
+read value
+if [ "$value" = "y" ]; then
+	auth
+fi
