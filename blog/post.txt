@@ -1,79 +1,147 @@
-There was a posting on Data Tau, the start of January 2015.<a href="http://www.teamleada.com/">TeamLeada</a> <a href="http://www.teamleada.com/data-year>New Year Data Science</a> 2015 resolution. Every 2 weeks a new Data Science hack to perform. Now, December 2014 i succesfully managed to complete 2 courses in the <a href="https://www.coursera.org/specialization/jhudatascience/">John Hopkins Data Science</a> specialization on Coursera. While it was fun and i did want to finish the other courses in the specialization, what with them being only 4 weeks long each, i was too busy once my normal semester started. Boring classes, individual projects and stuff. So, i did cancel the 3<sup>rd</sup> course i was enrolled in and decided to go along with the TeamLeda Data Hacks, since they would allow me to play with th R-Programming language some more. <br>
-<h2>The First Data Set...</h2>
-The mail came on the 7<sup>th</sup> of January.
-<pre>You just made your 2015 New Year's resolution to improve your data analysis skills and become data literate!
+Projects. Projects. Projects. After 5 semesters, cooped up in the same place, SO-VERY-FAR away from home, i finally realize what "monotonous" means. Being in a "rut", if you will. So, personal projects are all that remain, that are even remotely fun. Anyways, there's this project i wanted to do. It's been done by people over at the <a href="http://blog.yhathq.com/">YHatHQ</a>. It's a <a href="http://blog.yhathq.com/posts/fuzzy-matching-with-yhat.html">Fuzzy Matcher</a> and it uses the <a href="https://github.com/seatgeek/fuzzywuzzy">FuzzyWuzzy</a> Python Library developed by the poeple at SeatGeek to handle their ticket stubs duplication and etc etc. Now, in the DataScience, OSEMN(Obtain Data, Scrub Data, Exploratory Analysis, Modelling and iNterpreting results) approach, the more perfect the data is, the better the classifier accuracy and stuff. So, the project seemed a good approach to remove duplicates and clean the dataset. Before moving to Python web-apps i wanted to create a fuzzy-finder for my Terminal. Also, when you're developing something, why not just go full-in, with whatever feautures you can muster. The only rule <b>"It has to be done comletely in BASH/SHELL"</b>. No, Python scripts to make certain tasks easier. So, finallt i come up with: Goto. A 'cd' tool on steroids. :)
+<h2>goto: A 'cd' tool on steroids.</h2>
+<p><b>goto</b> is designed to be a complete replacement for cd, ie. the change directory tool in Linux. With, extra feautures. A <b>Fuzzy-File Finder</b> and a <b>Directory Shortcut Creator</b>. Something that can make switching between different folders/directories quite easy.</p>
+<p>So, how does it work?
+<pre><code>Usage:
 
-Every two weeks, we will e-mail you a dataset and some problems to work on. You can use any tool you'd like, although we suggest using R or Python. R is easy to install and if you are new to programming, the Introduction to R lesson is free in our courses!
+<b>goto -h||-help||h||help</b> : Prints the Usage
 
-Here's the first dataset and problem! Answers will be released at a later date. Tweet your solution @LeadaHQ!</pre>
-The mail had a DataSet attached to it. A CSV of a Bicycle Rental Company in California. The CSV had the following columns to it:<br>
-<table border=1>
-<tr>
-<td>Trip ID</td>
-<td>Duration</td>
-<td>Start Date<td>
-<td>Start Station</td>
-<td>Start Terminal</td></tr>
-<tr><td>End Date</td>
-<td>End Station</td>
-<td>End Terminal</td>
-<td>Bike #</td>
-<td>Subscription Type</td>
-<td>Zip Code</td></tr>
-</table>
-<h2>The Problems</h2>
-The problems this particular Data Set provided were, as follows:
-<pre>Problem 1: What was the average total time (in minutes) used by a bicycle in the data?
+<b>goto &lt;location_address></b> : Takes you to the <b>&lt;location_address></b>
 
-Problem 2: What was the most popular day by trip frequency in this dataset?
+<b>goto s||-s &lt;shortcut></b>   : Saves the Current Directory location as <b>&lt;shortcut></b>
 
-Problem 3 (harder): Assuming there are 30 bikes per station, find what date and time the bikes FIRST need to be rebalanced. As in, there are 0 bikes at a terminal for a customer to rent.</pre>
-<h2>The First Problem</h2>
-This one was particularly easy. Now the Data Set provided the time each cycle was issued/borrowed in seconds, also, each bike once returned, was reissued and had other records too. Now according to the Question, we needed the average time of all the bicycles(..individually) and in minutes. Now the CSV's 2<sup>nd</sup> Column:"Duration" and the 9<sup>th</sup> Column:"Bike #" was what was required. So, the code:
-<pre><code>(sum(x[,2])/60)/(length(unique(x[,9])))</pre></code>
-What this does, in it's entire-ty is: divide the "sum of total" durations by 60. This gives the total borrowing time in minutes. Now we just need the average. So, divide the former value by the number of unique bi-cycles that were issued/lent. Easy Peasy !
-<pre><code><b>Answer: 4288.087</b></pre></code>
-<h2>The Second Problem</h2>
-This one wasn't that easy. The problem, easy. What to do? Simple, check the date and see the date with the maximum number of rentals. That's the trip frequency for you. The BIGGEST problem, the 3<sup>rd</sup> column which took care of the Start Date was in form of a string and also contained the Time. Hence, i couldn't just use the unique() function again. So, what to do next? Copy the CSV in another variable. Remove the time from the back, so that only the Date remains.
-<pre><code>str(y)
-i<-sapply(y,is.factor)
-y[i]<-lapply(y[i],as.character)
-head(y)
-str(y)
+<b>goto l||-l</b>              : Lists all the Bookmarks saved.
 
-poop <- function(y){
-  for(i in 1:144015){
-    dts=y[i,3]
-    count=nchar(dts,type="char")
-    fifthletter=substr(dts,count-4,count-4)
-    if(fifthletter==" "){
-      update=substr(dts,1,count-5)
-     }else{
-        update=substr(dts,1,count-6)
-      }
-    y[i,3]=update
-  }
-  return(y)
-}
+<b>goto d||-d &lt;shortcut></b>   : Deletes the <b>&lt;shortcut></b> saved.
 
-calcfreq<-function(check,alldates,count=1){
-  for(i in 1:184){
-    count[i]=nrow(subset(check,check[,3]==alldates[i]))
-  }
-  return(count)
-}</pre></code>
-This gives the plain date. After that, simple. Calculate the Frequency.
-<pre><code><b>Answer: 
-> count[28]
-[1] 1264
-> alldates[28]
-[1] "9/25/13"
-</b></pre></code>
-<h2>The Third Problem</h2>
-This has something to do with keeping a buffer to check when the bike is out and when it is returned. But, i have no idea to do this. So... leave it. Time for the 2<sup>nd</sup> DataSet now.
- 
-    
+<b>goto p||-p &lt;shortcut></b>   : Prints the GOTO directory for <b>&lt;shortcut></b>
 
+<b>goto f||-f||find||-find &lt;term></b>     : Fuzzy-Finds all the file/folder matching REGEX in the working directory.
+</pre></code>
 
+What the Functions do, and how are they constructed? okay. The program divides the approach on the basis of the number of parameters that could be passed. <br>
+0 Parameters: Something just went wrong. Print the usage.<br>
+1 Parameters: "help", "list" or goto-location_address.<br>
+2 Parameters: "save_bookmark", "delete_bookmark", "print_bookmark" and "fuzzy_find".<br>
+Now, i should be explaining the functions that take in a single parameter, but it is necessary to explain the proccess i take for saving the shortcuts as all the other approaches are kinda linked to that.
+<pre><code>~$ goto s &lt;shortcut></pre></code>
+The save function takes in the shortcut name and saves it in a directory at ~/.GOTO as a text file <shortcut>.skt with the current working directory inside. Hence, the whole thing has a directory-file saving approach. That makes the time/space complexity both O(n). Using a .csv file that could save the shortcut with te location would be a much better approach but i just couldn't wrap my head around cosntant deleting and appending values in the file. A directory approach, is quite simple.
+Now to the single parameter funtions.
+Here goes:<br>
+<pre><code>~$ goto &lt;location_address></pre></code>
+This function is 2 folds. The value passed from the terminal is 1<sup>st</sup> checked in the shortcut directory, whether or not it exists. If it exists, we read the shortut file and 'cd' to the saved directory location:
+<pre><code>if [ -e "$savefile$first_parameter.skt" ]; then
+	x="$savefile$first_parameter.skt"
+	y="$(cat $x)"
+	cd $y
+fi</pre></code>
+If the shortcut does not exist, we check for the location, so that a normal 'cd' command can be replicated.
+<pre><code>if [ -e "$savefile$first_parameter.skt" ]; then
+	x="$savefile$first_parameter.skt"
+	y="$(cat $x)"
+	cd $y
+	#If not, just CD to that location.
+elif [ -e "$first_parameter" ]; then
+	cd "$first_parameter"
+else
+	echo -e "The Location/File/Folder $first_parameter does not exist."
+fi</pre></code>
 
-  
+The second function is the <code>goto l</code> function that exists all the bookmarks saved till now.
+<pre><code>if [ "$first_parameter" = "l" ] || [ "$first_parameter" = "-l" ] ; then
+	if [ ! -e "$savefile" ]; then
+	echo -e "You have not added any directory yet."
+	mkdir $savefile
+	usage
+elif [ ! "$(ls $savefile)" ]; then
+	echo -e "You have not added any directory yet."
+	usage
+else
+	#Reverse the path. Delete everything after / and before .
+	for file in $savefile*.skt; do
+		x="$(echo "$file" | rev)"
+		y=${x%%/*}
+		x="$(echo -n ${y##*.} | rev)"
+		echo -n "$x" 
+		echo " :  $(cat $file)"
+		echo -e " "
+		done
+fi</pre></code>
+First it checks whether or not the shortcut bookmark location exists or not at ~/.GOTO/ If it does then a simple loop runs to chose all .skt files. Here is the pace where the first complication arose. Technically,
+<pre><code>for file in $savefile*.skt; do</pre></code> choses the file along with the whole location. Example, let there be a shortcut file in ~/.GOTO called 'hello.skt' which has the home directory saved in it. $file would read:
+<pre><code>/home/ankitvad/.GOTO/hello.skt</pre></code>
+Wheras, we only require the name "hello". Now, a simple regex cut could be easy to trip everything including and before the 4<sup>th</sup> '/' and then everything after the '.'. But, the problem was the fact that i din't know if the 4<sup>th</sup> forward-slash would be a good metric to cut. Whatif there were only 3 slashes? So, i reversed the string. Deleted everything after the first slash '/' and before the '.'. It made it quite easy to get the shortcut name. This approach also makes it easier to look for files. After that, the 2 parameter functions.
+<pre><code>~$ goto d||p &lt;shortcut></pre></code> whichi is quite self-explanatory. Just printing and deleting the text files, based on searching. Now comes the fuzzy finder feauture.
+<h2>The Fuzz-Finder in Shell</h2>
+The whole fuzzy finding can be broken into 2 parts. 
+<pre><code>regex_value="[A-Za-z0-9]*"
+length=${#term}
+x="$regex_value"
+for (( i=0; i<$length; i++ )); do
+	y="$x${term:$i:1}"
+	x="$y$regex_value"
+done 
+regex_pattern="$x"
+#i just need: [A-Za-z0-9]* after each literal, or before. no idea.
+ls -R $pwd | grep -i $regex_pattern</pre></code>>
+The first part is creating the REGEX searchable string. Let's say that the string to search is :<code>"st.cs"</code>
+Now, technically this should return us: <code>style.css</code> file. For this we port it into the REGEX searchable term:
+<pre><code>"[A-Za-z0-9]*<b>s</b>[A-Za-z0-9]*<b>t</b>[A-Za-z0-9]*<b>.</b>[A-Za-z0-9]*<b>c</b>[A-Za-z0-9]*<b>s</b>[A-Za-z0-9]*</pre></code>
+This would match all strings which have "s, t, ., c, s" present. And after and before the characters we add the REGEX wildcard: [A-Za-z0-9]* which means any and all character before it.
+<br>The second part is looking for files that match the search pattern. For that we use:
+<pre><code>ls -R $pwd | grep -i $regex_pattern</pre></code>
+This command Recursively checks the file names of all files/folders present in the current working directory and feeds the value to the 'grep' tool which matches the name with the REGEX pattern and prints all the files found.
+After the file is found, a simple "find" can be used to print the location. Example, Let's say we are looking for "blog.html"
+<pre><code>~$ goto find bl.ht
+blog2.html
+finallyupwithablog.html
+blog.html
+blog.html
+~$ find -name blog.html
+./caffeinepost/blog.html
+./ankitvad.github.io/blog/blog.html
+</pre></code>
+After this, a simple <code>~$ goto &lt;location_address></code> command should suffice. And that's it. That's the whole program.
+<h2>Installation and Stuff</h2>
+Now the problem with running goto as a bash program is that it fails to execute the <code>~$ cd</code> command. The logic behind that is the fact that the 'cd' runs as a child process of the bash program execution. So, even though the code changes the directory, it dies as the goto execution finishes and hence it reverts back to the original directory. To avoid this, we either need to create functions for the 'cd' command and add that in the .bashrc or instead of running goto as: <code>bash goto</code> we can run it as: <code>. goto</code>. This gives it independent-parent process priority. So, to jump to the Makefile:
+<pre><code>bold=`tput bold`
+normal=`tput sgr0`
+
+all:
+	@echo "Run ${bold}'make install'${normal}."
+
+install:
+	bash install.sh
+	
+.PHONY: all install
+</pre></code>
+Which jumps to the execution of install.sh:
+<pre><code>#!/bin/bash
+INSTALL=~/.local/bin
+BASH_FILE=~/.bashrc
+bold=`tput bold`
+normal=`tput sgr0`
+mkdir -p "$INSTALL"
+cp goto "$INSTALL"
+echo 'export PATH=$PATH:/home/ankitvad/.local/bin/' >> "$BASH_FILE"
+echo 'alias goto=". goto"' >> "$BASH_FILE"
+echo -e "Added Stuff in .bashrc"
+. ~/.bashrc
+exit 0</pre></code>
+This, creates the install directory for the 'goto' program. It then proceeds to writing:
+<pre><code>export PATH=$PATH:/home/ankitvad/.local/bin/
+alias goto=". goto"</pre></code>
+To the <code>.bashrc</code> file. The alias is required so that we can run <code>goto</code> as <code>~$ . goto</code> instead of <code>bash goto</code>.<br>
+The code along with the Makefile and installation file is available at Github.<br>
+<a href="https://github.com/ankitvad/goto">ankitvad/goto</a><br>
+To install:
+<b>If You have "git-installed"</b>
+<pre><code>git clone "https://github.com/ankitvad/goto"
+cd goto
+make install</pre></code>
+<b>If git is not present</b>
+<pre><code>~$ wget -O goto.zip "https://github.com/ankitvad/goto/archive/master.zip"
+~$ unzip goto.zip
+~$ cd goto-master
+~$ make install</pre></code>
+If someone has a MAC system, please do tell me how it works out ?

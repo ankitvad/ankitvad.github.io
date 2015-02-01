@@ -1,0 +1,201 @@
+<html>
+  <head>
+    <meta charset=utf-8>
+    <title>Blog |-Ankit Vadehra</title>
+    <link rel="stylesheet" href="style.css" type="text/css">
+   </head>
+  <body>
+    <div class=container>
+      <div class=header>
+        <a href="http://ankit-vadehra.co.nr/">Ankit Vadehra</a> (Thoughts and Musings.)
+      </div>
+      <div class=navigation>
+        <ul>
+          <li><a href="/blog/blog.html">blog</a>
+          <li><a href="/blog/projects.html">projects</a>
+          </ul>
+      </div>
+      <div class=body>
+      <!--Enter Title in Line(21). Date on Line(24) Content on(27)-->
+  <h1 class="title">
+GOTO a cd replacement tool for Linux
+  </h1>
+  <p class=date>written on 
+31/01/2015
+  </p>
+  <p><!--Content after this-->
+Projects. Projects. Projects. After 5 semesters, cooped up in the same place, SO-VERY-FAR away from home, i finally realize what "monotonous" means. Projects are all that remain, that are even remotely fun(..that is, apart from watching TV Shows :D ). Anyways, there's this project i wanted to do. It's been done by the awesome people over at <a href="http://blog.yhathq.com/">YHatHQ</a>. It's a <a href="http://blog.yhathq.com/posts/fuzzy-matching-with-yhat.html">Fuzzy Matcher</a> and it uses the <a href="https://github.com/seatgeek/fuzzywuzzy">FuzzyWuzzy</a> Python Library developed by the poeple at SeatGeek to handle their ticket stubs duplication and etc etc. Now, in the DataScience, OSEMN(Obtain Data, Scrub Data, Exploratory Analysis, Modelling and iNterpreting results) approach, the more perfect the data is, the better the classifier accuracy and stuff. So, the project seemed a good approach to remove duplicates and clean the dataset. Before moving to Python web-apps i wanted to create a fuzzy-finder for my Terminal. Also, when you're developing something, why not just go full-in, with whatever feautures you can muster. The only rule <b>"It has to be done comletely in BASH/SHELL"</b>. No, Python scripts to make certain tasks easier.
+Finally i come up with: <b>goto</b>: A 'cd' tool on steroids. :)
+<h2>goto: A 'cd' tool on steroids.</h2>
+<p><b>goto</b> is designed to be a complete replacement for cd, ie. the change directory tool in Linux. With, extra feautures. A <b>Fuzzy-File Finder</b> and a <b>Directory Shortcut Creator</b>. Something that can make switching between different folders/directories quite easy.</p>
+<p>So, how does it work?
+<pre><code>Usage:
+
+<b>goto -h||-help||h||help</b> : Prints the Usage
+
+<b>goto &lt;location_address></b> : Takes you to the <b>&lt;location_address></b>
+
+<b>goto s||-s &lt;shortcut></b>   : Saves the Current Directory location as <b>&lt;shortcut></b>
+
+<b>goto l||-l</b>              : Lists all the Bookmarks saved.
+
+<b>goto d||-d &lt;shortcut></b>   : Deletes the <b>&lt;shortcut></b> saved.
+
+<b>goto p||-p &lt;shortcut></b>   : Prints the GOTO directory for <b>&lt;shortcut></b>
+
+<b>goto f||-f||find||-find &lt;term></b>     : Fuzzy-Finds all the file/folder matching REGEX in the working directory.
+</pre></code>
+
+What the Functions do, and how are they constructed? okay. The program divides the approach on the basis of the number of parameters that could be passed.<br>
+<b>0 Parameters</b>: Something just went wrong. Print the <code>usage</code>.<br>
+<b>1 Parameter</b>: <code>help</code>, <code>list</code> or <code>goto &lt;location_address></code>.<br>
+<b>2 Parameters</b>: <code>save_shortcut</code>, <code>delete_shortcut</code>, <code>print_shortcut</code> and <code>fuzzy_find</code>.<br>
+<b>Anything other than 0, 1, 2</b>: Some error. Print <code>Usage</code>.<br>
+Now, i should be explaining the functions that take in a single parameter, but it is necessary to explain the proccess i take for saving the shortcuts as all the other approaches are kinda linked to that.<pre><code>~$ goto s &lt;shortcut></pre></code>
+The save function takes in the shortcut name and saves it in a directory at <code>~/.GOTO</code> as a text file <code>&lt;shortcut>.skt</code> with the current working directory inside.<br>
+Example: Let's say i'm in my <b>downloads</b> folder, and want to save it as a shortcut: <b>d</b>.
+<pre><code>~$ goto ~/downloads
+~$ goto s d
+Shortcut Created.!
+</pre></code>
+This creates a file <code>d.skt</code> with the location of downloads in it. Let's see:
+<pre><code>~$ cat ~/.GOTO/d.skt
+/home/ankitvad/downloads</code></pre>
+After that, we can jump to downloads with:
+<pre><code>~$ goto d</code></pre>
+
+ Hence, the whole thing has a directory-file saving approach. That makes the time/space complexity both <b>O(n)</b>. Using a .csv file that could save the shortcut with location would be a much better approach but i just couldn't wrap my head around cosntant deleting and appending values in the file. A directory approach, is quite simple.
+Now to the single parameter funtions.
+Here goes:<br>
+<pre><code>~$ goto &lt;location_address></pre></code>
+This function is 2 folds. The value passed from the terminal is 1<sup>st</sup> checked in the shortcut directory, whether or not it exists. If it exists, we read the shortut file and 'cd' to the saved directory location:
+<pre><code>if [ -e "$savefile$first_parameter.skt" ]; then
+	x="$savefile$first_parameter.skt"
+	y="$(cat $x)"
+	cd $y
+fi</pre></code>
+Example, in the previous example we created a shortcut for <b>downloads</b> as <b>d</b>. Now, when we do:
+<pre><code>~$ goto d</code></pre>
+It first checks whether <code>d.skt</code> exists or not. If it does, then we move to the value inside the file, else, we try moving directly to the value. This helps to replicate <b>cd</b>'s normal feautures also.
+<pre><code>if [ -e "$savefile$first_parameter.skt" ]; then
+	x="$savefile$first_parameter.skt"
+	y="$(cat $x)"
+	cd $y
+	#If not, just CD to that location.
+elif [ -e "$first_parameter" ]; then
+	cd "$first_parameter"
+else
+	echo -e "The Location/File/Folder $first_parameter does not exist."
+fi</pre></code>
+Example, we can move to locations like:
+<pre><code>~$ goto ~/tmp</code></pre>
+Which, takes us to: <code>/home/ankitvad/tmp</code>.<br><br>
+The second function is the <code>goto l</code> function that lists all the bookmarks saved till now.
+<pre><code>if [ "$first_parameter" = "l" ] || [ "$first_parameter" = "-l" ] ; then
+	if [ ! -e "$savefile" ]; then
+	echo -e "You have not added any directory yet."
+	mkdir $savefile
+	usage
+elif [ ! "$(ls $savefile)" ]; then
+	echo -e "You have not added any directory yet."
+	usage
+else
+	#Reverse the path. Delete everything after / and before .
+	for file in $savefile*.skt; do
+		x="$(echo "$file" | rev)"
+		y=${x%%/*}
+		x="$(echo -n ${y##*.} | rev)"
+		echo -n "$x" 
+		echo " :  $(cat $file)"
+		echo -e " "
+		done
+fi</pre></code>
+First it checks whether or not the shortcut bookmark location exists or not at <code>~/.GOTO/</code> If it does then a simple loop runs to chose all .skt files. Here is the place where the first complication arose. Technically,
+<pre><code>for file in $savefile*.skt; do</pre></code> choses the file along with the whole location. Example, let there be a shortcut file in <code>~/.GOTO</code> called <b>hello.skt</b> which has the home directory saved in it. Then the variable <code>file</code> gives us:
+<pre><code>/home/ankitvad/.GOTO/hello.skt</pre></code>
+Wheras, we only require the filename <b>hello</b>. Now, a simple regex cut could easily remove everything including and before the 4<sup>th</sup> <b>'/'</b> and then everything including and after the <b>'.'</b>. But, the problem was the fact that i didn't know if the 4<sup>th</sup> forward-slash would be a good metric to cut. What if due to server sub-directory structure there were more than 4 slashes? So, i reversed the string. Deleted everything after the first slash <b>'/'</b> and before the <b>'.'</b>. That made it quite easy to get the shortcut name. This approach also makes it easier to look for files. <br><br>After that, the 2 parameter functions.
+<pre><code>~$ goto d||p||find &lt;shortcut></pre></code> which can respectively delete shortcuts, print shortcut locations and fuzzy find terms. These are quite self-explanatory and have an easy onstruction. Just printing and deleting the text files, based on searching. Now comes the fuzzy finder feauture.
+<h2>The Fuzz-Finder in Shell</h2>
+The whole fuzzy finding can be broken into 2 parts. 
+<pre><code>regex_value="[A-Za-z0-9]*"
+length=${#term}
+x="$regex_value"
+for (( i=0; i&lt;$length; i++ )); do
+	y="$x${term:$i:1}"
+	x="$y$regex_value"
+done 
+regex_pattern="$x"
+#i just need: [A-Za-z0-9]* after each literal, or before.
+ls -R $pwd | grep -i $regex_pattern</pre></code>
+The first part is creating the REGEX searchable string. Let's say that the string to search is : <code>st.cs</code>.
+Now, technically this should return us: <code>style.css</code> file. For this we port it into the REGEX searchable term:
+<pre><code>[A-Za-z0-9]*s[A-Za-z0-9]*t[A-Za-z0-9]*.[A-Za-z0-9]*c[A-Za-z0-9]*s[A-Za-z0-9]*</pre></code>
+This would match all strings that have "s, t, ., c, s" present. Also, after and before the characters we add the REGEX wildcard: [A-Za-z0-9]* which means there can be any character before and after the search characters we provided.<br>
+<br>The second part is looking for files that match the search pattern. For that we use:
+<pre><code>ls -R $pwd | grep -i $regex_pattern</pre></code>
+This command Recursively checks the file names of all files/folders present in the current working directory and feeds the value to the 'grep' tool which matches the name with the REGEX pattern and prints all the files found.
+After the file is found, a simple "find" can be used to print the location. Example, Let's say we are looking for "blog.html"
+<pre><code>~$ goto find bl.ht
+blog2.html
+finallyupwithablog.html
+blog.html
+blog.html
+~$ find -name blog.html
+./caffeinepost/blog.html
+./ankitvad.github.io/blog/blog.html
+</pre></code>
+After this, a simple <code>~$ goto &lt;location_address></code> command should suffice. And that's it. That's the whole program.
+<h2>Installation and Stuff</h2>
+The problem with running goto as a bash program is that it fails to execute the <code>~$ cd</code> command. The logic behind that is the fact that the 'cd' runs as a child process of the bash program execution. So, even though the code changes the directory, it dies as the goto execution finishes and hence it reverts back to the original directory. To avoid this, we either need to create functions for the 'cd' command and add that in the .bashrc or instead of running goto as: <code>bash goto</code> we can run it as: <code>. goto</code>. This gives it independent-parent process priority. Jumping to the Makefile:
+<pre><code>bold=`tput bold`
+normal=`tput sgr0`
+
+all:
+	@echo "Run ${bold}'make install'${normal}."
+
+install:
+	bash install.sh
+	
+.PHONY: all install
+</pre></code>
+Which jumps to the execution of install.sh:
+<pre><code>#!/bin/bash
+INSTALL=~/.local/bin
+BASH_FILE=~/.bashrc
+bold=`tput bold`
+normal=`tput sgr0`
+mkdir -p "$INSTALL"
+cp goto "$INSTALL"
+echo 'export PATH=$PATH:~/.local/bin/' >> "$BASH_FILE"
+echo 'alias goto=". goto"' >> "$BASH_FILE"
+echo -e "Added Stuff in .bashrc"
+. ~/.bashrc
+exit 0</pre></code>
+This, creates the install directory for the 'goto' program. It then proceeds to write:
+<pre><code>export PATH=$PATH:~/.local/bin/
+alias goto=". goto"</pre></code>
+To the <code>.bashrc</code> file. The alias is required so that we can run <code>goto</code> as <pre><code>~$ . goto</code></pre> instead of <pre><code>~$ bash goto</code></pre>
+The code along with the Makefile and installation file is available at Github.<br>
+<a href="https://github.com/ankitvad/goto">ankitvad/goto</a><br><br>
+To install:<br>
+<b>If You have "git" installed</b>
+<pre><code>~$ git clone "https://github.com/ankitvad/goto"
+~$ cd goto
+~$ make install</pre></code>
+<b>If "git" is not present</b>
+<pre><code>~$ wget -O goto.zip "https://github.com/ankitvad/goto/archive/master.zip"
+~$ unzip goto.zip
+~$ cd goto-master
+~$ make install</pre></code>
+If someone has a MAC system, please do tell me how it works out ?
+
+  </p>
+  </div>
+  <div class=footer>
+    <p>Blog Powered using <a href="">CaffeinePost</a></p>
+    <p>You can find me at:</p>
+    <p><a href="http://github.com/ankitvad">GitHub</a>, <a href="http://www.linkedin.com/in/ankitvad">LinkedIn</a>, <a href="https://www.facebook.com/ankit.vadehra">Facebook</a>,<br><a href="https://plus.google.com/+AnkitVadehr%C4%81">Google+</a>, <a href="http://www.quora.com/Ankit-Vadehra">Quora</a>, <a href="http://www.twitter.com/ankitvad">Twitter</a></p>
+  </div>
+  </div>
+  </body>
+</html>
