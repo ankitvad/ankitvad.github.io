@@ -1,3 +1,29 @@
+<html>
+  <head>
+    <meta charset=utf-8>
+    <title>Blog |-Ankit Vadehra</title>
+    <link rel="stylesheet" href="style.css" type="text/css">
+   </head>
+  <body>
+    <div class=container>
+      <div class=header>
+        <a href="http://ankit-vadehra.co.nr/">Ankit Vadehra</a> (Thoughts and Musings.)
+      </div>
+      <div class=navigation>
+        <ul>
+          <li><a href="/blog/blog.html">blog</a>
+          <li><a href="/blog/projects.html">projects</a>
+          </ul>
+      </div>
+      <div class=body>
+      <!--Enter Title in Line(21). Date on Line(24) Content on(27)-->
+  <h1 class="title">
+Visualizing WhatsApp Chat History
+  </h1>
+  <p class=date>written on 
+06/08/2015
+  </p>
+  <p><!--Content after this-->
 It's been quite some time since i wrote these scripts to visualize and analyze whatsapp chat histories. Now, considering the fact that i'm relatively free, looking for jobs and stuff i finally decided to write a new blog post(sure, nobody cares, but..but.. if someone likes this they could use this and further expand on it. YOLO and all that.). Clarifying first and for all, my laptop backups and memorycards are full of WhatsApp histories, but they are all encrypted ".bak" files and considering that i was a "Blackberry Boy" - (the BIS internet plan), that made it impossible to send the .txt files to myself for analysis. Bummer. Bummer. Bummer.<br>
 Anyways, i just started asking my friends to send me the Chat history between us. Now, it was necessary to get chat histories from dudes who i've been talking to since the past 2-3 years(Needed Temporal Data, the more data points the better.). So, the problem with asking other people for WhatsApp chat history is that the text output is not standardized. Android guys have different format, Apple punks their own et cetra et cetra. Hence, i could not work with a single python script for all distinct types of data input. Anyways, i'll just explain 1 of the scripts i used, the one i used for the Apple Chat history.<br>
 <b><i>Word of Advice:</b></i> It is better to install <a href="http://sublimetext.com/">SublimeText</a> text editor. Seriously. It is amazing, with it's regex and library tools and also the multi-line cursor possibilitites. Sure, Python regex can parse almost everything easily, but you still have to think about all the possible breaking points like line breaks and identation. One can't think about all the errors that might creep up in the input data. So it is much better to just open the ".txt" data inputs in SublimeText and then glancing at it and manually handle all the data errors that are there. Just saying. BASH/Python/Perl Script Ninjas can just ignore the advice and run there regex's..
@@ -10,7 +36,7 @@ The data is in the form of messages between people attached with the appropriate
 05/12/12 5:35:49 PM: ABC: Pollution ko maar goli. Thandi hai
 05/12/12 5:41:12 PM: AV: Lol... Vo to hain hee... Raat ko jaada.
 05/12/12 5:41:50 PM: AV: my parents they bought me the new one I wanted, Masst blackberry hain.</pre></code>
-Here the <code>(AV = Ankit Vadehra(ie. Me)); && ABC = (A Friend);</code>g. We require the dates ie. 15/03/13. Hence we distribute the dates in two files, one for each user. Then we can calculate the number of messages sent by each person and visualize them in the temporal form. We also take the messages sent and then construct the word clouds so that we can see the most frequently used words. That's about it. The gist of what i'm trying to do. No Hi-Fi nonsense. YOLO-Again!!
+Here the <code>(AV = Ankit Vadehra(ie. Me)); && ABC = (A Friend);</code>. We require the dates ie. 15/03/13. Hence we distribute the dates in two files, one for each user. Then we can calculate the number of messages sent by each person and visualize them in the temporal form. We also take the messages sent and then construct the word clouds so that we can see the most frequently used words. That's about it. The gist of what i'm trying to do. No Hi-Fi nonsense. YOLO-Again!!
 <h2>Mumbo-Jumbo, Coding..</h2>
 The idea is to divide the project in 2 halfs. Seperate the Chat-History into Dates and the Message(Since i'm trying to distribute the data in the form of distinct dates, i'm ignoring the timestamp attached with each message. Consider only the date.). The Dates will help in visualizing the frequency of messages over a period of time and the messages are feeded into the online word-cloud generator to see the most frequent words used.(The word cloud can also be generated using Python, but the online generators like wordly etc are much more prettier. Ha Ha Ha Ha ;) ).
 <br>
@@ -30,7 +56,7 @@ while y:
 	elif (you in y):
 		temp = y.split(" ",1)
 		ABC_date.write(temp[0]+"\n")
-	y = x.readline().decode('utf-8-sig').encode('utf-8')</pre</code>
+	y = x.readline().decode('utf-8-sig').encode('utf-8')</pre></code>
 Now, the explaining part:<br>
 Here, ABC= My friends name obscured for privacy and all that stuff, you know. The variables <code> me && you</code> are user specific. They need to contain the name in the chat history, however way you get it in the ".txt" file. Now we gotta parse the chat history, line by line and seperate the dates in different ".txt" files that will be used later for counting the number of messages per day and later for visualization. Now, i'm gonna quickly explain the Python <code>split</code> function here.<br>
 Let's say that the variable <code>y</code> contains each line in the chat file per iteration. So,<br>
@@ -68,11 +94,11 @@ while y:
 		x = re.sub('[?\.#_]','',x)
 		x = re.sub('[\s]+',' ',x)
 		a.write(x+"\n")
-	y = b.readline()</pre</code>
+	y = b.readline()</pre></code>
 Now, here what <code>temp = y.split(": ",2)</code> does is breaks <code>temp</code> into an array of the form:<br>
 <pre><code>y = 13/10/13 10:20:28 pm: ABC: Python is nice
 temp[0] = 13/10/13 10:20:28 pm: ABC:
-temp[1] = Python is nice</pre</code>
+temp[1] = Python is nice</pre></code>
 and the regex-substitute removes all emoticons and pronunciations from the message using:<br><pre><code>x = re.sub('([\:\;][\)\|\\\/dDOoPp\(\'\"][\(\)DOo]?)','',x)
 		x = re.sub('[?\.#_]','',x)
 		x = re.sub('[\s]+',' ',x)</pre></code>
@@ -116,7 +142,11 @@ plt.plot_date(x=days2, y=messages2,color='c',label='Friend',linestyle='-.')
 plt.legend()
 plt.show()</pre></code>
 This is pretty much self-sufficient and we end up with the following outputs:<br>
-<center><img src="2-1.jpeg"><br><img src="2-2.jpeg"></center><br>
+<center><img width="90%"src="2-1.jpeg"><br><img width="90%"src="2-2.jpeg"><br>
+</center>Word Cloud Generated Is:<br>
+<center>
+<img width="80%" src="1-3.png">
+</center><br>
 This is what i did, and that's about it. Next step, vizualizing my Google History and Clustering it on the basis of title similarity.. Laters..<br>
 -Ankit Vadehra
 
@@ -126,3 +156,14 @@ This is what i did, and that's about it. Next step, vizualizing my Google Histor
  
 
 
+
+  </p>
+  </div>
+  <div class=footer>
+    <p>Blog Powered using <a href="">CaffeinePost</a></p>
+    <p>You can find me at:</p>
+    <p><a href="http://github.com/ankitvad">GitHub</a>, <a href="http://www.linkedin.com/in/ankitvad">LinkedIn</a>, <a href="https://www.facebook.com/ankit.vadehra">Facebook</a>,<br><a href="https://plus.google.com/+AnkitVadehr%C4%81">Google+</a>, <a href="http://www.quora.com/Ankit-Vadehra">Quora</a>, <a href="http://www.twitter.com/ankitvad">Twitter</a></p>
+  </div>
+  </div>
+  </body>
+</html>
