@@ -11,6 +11,8 @@
       </div>
       <div class=navigation>
         <ul>
+          <li><a href="/">home</a>
+            <li><a href="/drawing/drawing.html">drawings</a>
           <li><a href="/blog/blog.html">blog</a>
           <li><a href="/blog/projects.html">projects</a>
           </ul>
@@ -32,31 +34,33 @@ The idea is to visualize the Temporal Data ie. some data value plotted over a pe
 of time. So, the data is collected through saving the Whatsapp Chat logs taken over a period of 1 Month to 2 Years. It has all the dates taken and then plotted as Message Count between the user ie. ”Me” and ”Friends”.
 <h2>The Data</h2>
 The data is in the form of messages between people attached with the appropriate time and date stamps. The data is spread across different communication days.<br>
-<pre><code>05/12/12 10:50:12 AM: AV: Bhai, delhi has pollution.
-05/12/12 5:35:49 PM: ABC: Pollution ko maar goli. Thandi hai
-05/12/12 5:41:12 PM: AV: Lol... Vo to hain hee... Raat ko jaada.
-05/12/12 5:41:50 PM: AV: my parents they bought me the new one I wanted, Masst blackberry hain.</pre></code>
+<!-- HTML generated using hilite.me --><div style="background: #f0f3f3; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #FF6600">05</span><span style="color: #555555">/</span><span style="color: #FF6600">12</span><span style="color: #555555">/</span><span style="color: #FF6600">12</span> <span style="color: #FF6600">10</span>:<span style="color: #FF6600">50</span>:<span style="color: #FF6600">12</span> AM: AV: Bhai, delhi has pollution<span style="color: #555555">.</span>
+<span style="color: #FF6600">05</span><span style="color: #555555">/</span><span style="color: #FF6600">12</span><span style="color: #555555">/</span><span style="color: #FF6600">12</span> <span style="color: #FF6600">5</span>:<span style="color: #FF6600">35</span>:<span style="color: #FF6600">49</span> PM: ABC: Pollution ko maar goli<span style="color: #555555">.</span> Thandi hai
+<span style="color: #FF6600">05</span><span style="color: #555555">/</span><span style="color: #FF6600">12</span><span style="color: #555555">/</span><span style="color: #FF6600">12</span> <span style="color: #FF6600">5</span>:<span style="color: #FF6600">41</span>:<span style="color: #FF6600">12</span> PM: AV: Lol<span style="color: #555555">...</span> Vo to hain hee<span style="color: #555555">...</span> Raat ko jaada<span style="color: #555555">.</span>
+<span style="color: #FF6600">05</span><span style="color: #555555">/</span><span style="color: #FF6600">12</span><span style="color: #555555">/</span><span style="color: #FF6600">12</span> <span style="color: #FF6600">5</span>:<span style="color: #FF6600">41</span>:<span style="color: #FF6600">50</span> PM: AV: my parents they bought me the new one I wanted, Masst blackberry hain<span style="color: #555555">.</span>
+</pre></div>
 Here the <code>(AV = Ankit Vadehra(ie. Me)); && ABC = (A Friend);</code>. We require the dates ie. 15/03/13. Hence we distribute the dates in two files, one for each user. Then we can calculate the number of messages sent by each person and visualize them in the temporal form. We also take the messages sent and then construct the word clouds so that we can see the most frequently used words. That's about it. The gist of what i'm trying to do. No Hi-Fi nonsense. YOLO-Again!!
 <h2>Mumbo-Jumbo, Coding..</h2>
 The idea is to divide the project in 2 halfs. Seperate the Chat-History into Dates and the Message(Since i'm trying to distribute the data in the form of distinct dates, i'm ignoring the timestamp attached with each message. Consider only the date.). The Dates will help in visualizing the frequency of messages over a period of time and the messages are feeded into the online word-cloud generator to see the most frequent words used.(The word cloud can also be generated using Python, but the online generators like wordly etc are much more prettier. Ha Ha Ha Ha ;) ).
 <br>
-<pre><code>dates.py
-me = "Ankit Vadehra:"
-you = "ABC:"
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">dates<span style="color: #333333">.</span>py
+me <span style="color: #333333">=</span> <span style="background-color: #e0e0ff">&quot;Ankit Vadehra:&quot;</span>
+you <span style="color: #333333">=</span> <span style="background-color: #e0e0ff">&quot;ABC:&quot;</span>
 
-ankit_date = open("ankit_date.txt","w")
-ABC_date = open("ABC_date.txt","w")
+ankit_date <span style="color: #333333">=</span> <span style="color: #007722">open</span>(<span style="background-color: #e0e0ff">&quot;ankit_date.txt&quot;</span>,<span style="background-color: #e0e0ff">&quot;w&quot;</span>)
+ABC_date <span style="color: #333333">=</span> <span style="color: #007722">open</span>(<span style="background-color: #e0e0ff">&quot;ABC_date.txt&quot;</span>,<span style="background-color: #e0e0ff">&quot;w&quot;</span>)
 
-x = open("ABC.txt","r")
-y = x.readline().decode('utf-8-sig').encode('utf-8')
-while y:
-	if (me in y):
-		temp = y.split(" ",1)
-		ankit_date.write(temp[0]+"\n")
-	elif (you in y):
-		temp = y.split(" ",1)
-		ABC_date.write(temp[0]+"\n")
-	y = x.readline().decode('utf-8-sig').encode('utf-8')</pre></code>
+x <span style="color: #333333">=</span> <span style="color: #007722">open</span>(<span style="background-color: #e0e0ff">&quot;ABC.txt&quot;</span>,<span style="background-color: #e0e0ff">&quot;r&quot;</span>)
+y <span style="color: #333333">=</span> x<span style="color: #333333">.</span>readline()<span style="color: #333333">.</span>decode(<span style="background-color: #e0e0ff">&#39;utf-8-sig&#39;</span>)<span style="color: #333333">.</span>encode(<span style="background-color: #e0e0ff">&#39;utf-8&#39;</span>)
+<span style="color: #228899; font-weight: bold">while</span> y:
+  <span style="color: #228899; font-weight: bold">if</span> (me <span style="color: #000000; font-weight: bold">in</span> y):
+    temp <span style="color: #333333">=</span> y<span style="color: #333333">.</span>split(<span style="background-color: #e0e0ff">&quot; &quot;</span>,<span style="color: #6666ff; font-weight: bold">1</span>)
+    ankit_date<span style="color: #333333">.</span>write(temp[<span style="color: #6666ff; font-weight: bold">0</span>]<span style="color: #333333">+</span><span style="background-color: #e0e0ff">&quot;</span><span style="color: #666666; font-weight: bold; background-color: #e0e0ff">\n</span><span style="background-color: #e0e0ff">&quot;</span>)
+  <span style="color: #228899; font-weight: bold">elif</span> (you <span style="color: #000000; font-weight: bold">in</span> y):
+    temp <span style="color: #333333">=</span> y<span style="color: #333333">.</span>split(<span style="background-color: #e0e0ff">&quot; &quot;</span>,<span style="color: #6666ff; font-weight: bold">1</span>)
+    ABC_date<span style="color: #333333">.</span>write(temp[<span style="color: #6666ff; font-weight: bold">0</span>]<span style="color: #333333">+</span><span style="background-color: #e0e0ff">&quot;</span><span style="color: #666666; font-weight: bold; background-color: #e0e0ff">\n</span><span style="background-color: #e0e0ff">&quot;</span>)
+  y <span style="color: #333333">=</span> x<span style="color: #333333">.</span>readline()<span style="color: #333333">.</span>decode(<span style="background-color: #e0e0ff">&#39;utf-8-sig&#39;</span>)<span style="color: #333333">.</span>encode(<span style="background-color: #e0e0ff">&#39;utf-8&#39;</span>)
+</pre></div>
 Now, the explaining part:<br>
 Here, ABC= My friends name obscured for privacy and all that stuff, you know. The variables <code> me && you</code> are user specific. They need to contain the name in the chat history, however way you get it in the ".txt" file. Now we gotta parse the chat history, line by line and seperate the dates in different ".txt" files that will be used later for counting the number of messages per day and later for visualization. Now, i'm gonna quickly explain the Python <code>split</code> function here.<br>
 Let's say that the variable <code>y</code> contains each line in the chat file per iteration. So,<br>
@@ -64,83 +68,96 @@ Let's say that the variable <code>y</code> contains each line in the chat file p
 Now, <code>temp = y.split(" ",1)</code> creates an array of <code>temp</code>. It splits the data element in 2 parts, seperated by the first " " blank space. Hence, we get:<br>
 <code>temp[0] = 13/10/13<br>temp[1] = 10:20:28 pm: ABC: Python is nice</code><br>
 The <code>if</code> condition just states whether the name in the line is me-or-you, and then writes the dates, ie. <code>temp[0]</code> in seperate ".txt" files for the 2 users. After running this we get 2 outputs: <code>ankit_date.txt && ABC_date.txt</code> and the output looks somewhat like this:<br>
-<pre><code>02/10/13
-13/10/13
-13/10/13
-13/10/13
-13/10/13
-13/10/13
-13/10/13
-13/10/13
-13/10/13
-13/10/13
-13/10/13
-13/10/13
-13/10/13
-13/10/13
-...</pre></code>
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #4400EE; font-weight: bold">02</span><span style="color: #333333">/</span><span style="color: #6666ff; font-weight: bold">10</span><span style="color: #333333">/</span><span style="color: #6666ff; font-weight: bold">13</span>
+<span style="color: #6666ff; font-weight: bold">13</span><span style="color: #333333">/</span><span style="color: #6666ff; font-weight: bold">10</span><span style="color: #333333">/</span><span style="color: #6666ff; font-weight: bold">13</span>
+<span style="color: #6666ff; font-weight: bold">13</span><span style="color: #333333">/</span><span style="color: #6666ff; font-weight: bold">10</span><span style="color: #333333">/</span><span style="color: #6666ff; font-weight: bold">13</span>
+<span style="color: #6666ff; font-weight: bold">13</span><span style="color: #333333">/</span><span style="color: #6666ff; font-weight: bold">10</span><span style="color: #333333">/</span><span style="color: #6666ff; font-weight: bold">13</span>
+<span style="color: #6666ff; font-weight: bold">13</span><span style="color: #333333">/</span><span style="color: #6666ff; font-weight: bold">10</span><span style="color: #333333">/</span><span style="color: #6666ff; font-weight: bold">13</span>
+<span style="color: #6666ff; font-weight: bold">13</span><span style="color: #333333">/</span><span style="color: #6666ff; font-weight: bold">10</span><span style="color: #333333">/</span><span style="color: #6666ff; font-weight: bold">13</span>
+<span style="color: #6666ff; font-weight: bold">13</span><span style="color: #333333">/</span><span style="color: #6666ff; font-weight: bold">10</span><span style="color: #333333">/</span><span style="color: #6666ff; font-weight: bold">13</span>
+<span style="color: #6666ff; font-weight: bold">13</span><span style="color: #333333">/</span><span style="color: #6666ff; font-weight: bold">10</span><span style="color: #333333">/</span><span style="color: #6666ff; font-weight: bold">13</span>
+<span style="color: #6666ff; font-weight: bold">13</span><span style="color: #333333">/</span><span style="color: #6666ff; font-weight: bold">10</span><span style="color: #333333">/</span><span style="color: #6666ff; font-weight: bold">13</span>
+<span style="color: #6666ff; font-weight: bold">13</span><span style="color: #333333">/</span><span style="color: #6666ff; font-weight: bold">10</span><span style="color: #333333">/</span><span style="color: #6666ff; font-weight: bold">13</span>
+<span style="color: #6666ff; font-weight: bold">13</span><span style="color: #333333">/</span><span style="color: #6666ff; font-weight: bold">10</span><span style="color: #333333">/</span><span style="color: #6666ff; font-weight: bold">13</span>
+<span style="color: #6666ff; font-weight: bold">13</span><span style="color: #333333">/</span><span style="color: #6666ff; font-weight: bold">10</span><span style="color: #333333">/</span><span style="color: #6666ff; font-weight: bold">13</span>
+<span style="color: #6666ff; font-weight: bold">13</span><span style="color: #333333">/</span><span style="color: #6666ff; font-weight: bold">10</span><span style="color: #333333">/</span><span style="color: #6666ff; font-weight: bold">13</span>
+<span style="color: #6666ff; font-weight: bold">13</span><span style="color: #333333">/</span><span style="color: #6666ff; font-weight: bold">10</span><span style="color: #333333">/</span><span style="color: #6666ff; font-weight: bold">13</span>
+<span style="color: #333333">...</span>
+</pre></div>
+
 These are all the dates at which i sent messages. The number of times a date occurs = Number of messages sent at that particular date.<br>
 Now, the second part is seperating the messages and also cleaning them, removing all emoticons and unecessary punctuations, so that all remains is the proper words in the message.<br>
-<pre><code>cal_msg.py :
-import re
-b = open("ABC.txt","r")
-a = open("messages.txt","w")
-y = b.readline().decode('utf-8-sig').encode('utf-8')
-while y:
-	if(y != '\r\n'):
-		temp = y.split(": ",2)
-		x = temp[2]
-		x = re.sub('([\:\;][\)\|\\\/dDOoPp\(\'\"][\(\)DOo]?)','',x)
-		x = re.sub('[?\.#_]','',x)
-		x = re.sub('[\s]+',' ',x)
-		a.write(x+"\n")
-	y = b.readline()</pre></code>
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #228899; font-weight: bold">import</span> <span style="color: #0e84b5; font-weight: bold">re</span>
+b <span style="color: #333333">=</span> <span style="color: #007722">open</span>(<span style="background-color: #e0e0ff">&quot;ABC.txt&quot;</span>,<span style="background-color: #e0e0ff">&quot;r&quot;</span>)
+a <span style="color: #333333">=</span> <span style="color: #007722">open</span>(<span style="background-color: #e0e0ff">&quot;messages.txt&quot;</span>,<span style="background-color: #e0e0ff">&quot;w&quot;</span>)
+y <span style="color: #333333">=</span> b<span style="color: #333333">.</span>readline()<span style="color: #333333">.</span>decode(<span style="background-color: #e0e0ff">&#39;utf-8-sig&#39;</span>)<span style="color: #333333">.</span>encode(<span style="background-color: #e0e0ff">&#39;utf-8&#39;</span>)
+<span style="color: #228899; font-weight: bold">while</span> y:
+  <span style="color: #228899; font-weight: bold">if</span>(y <span style="color: #333333">!=</span> <span style="background-color: #e0e0ff">&#39;</span><span style="color: #666666; font-weight: bold; background-color: #e0e0ff">\r\n</span><span style="background-color: #e0e0ff">&#39;</span>):
+    temp <span style="color: #333333">=</span> y<span style="color: #333333">.</span>split(<span style="background-color: #e0e0ff">&quot;: &quot;</span>,<span style="color: #6666ff; font-weight: bold">2</span>)
+    x <span style="color: #333333">=</span> temp[<span style="color: #6666ff; font-weight: bold">2</span>]
+    x <span style="color: #333333">=</span> re<span style="color: #333333">.</span>sub(<span style="background-color: #e0e0ff">&#39;([\:\;][\)\|</span><span style="color: #666666; font-weight: bold; background-color: #e0e0ff">\\</span><span style="background-color: #e0e0ff">\/dDOoPp\(</span><span style="color: #666666; font-weight: bold; background-color: #e0e0ff">\&#39;\&quot;</span><span style="background-color: #e0e0ff">][\(\)DOo]?)&#39;</span>,<span style="background-color: #e0e0ff">&#39;&#39;</span>,x)
+    x <span style="color: #333333">=</span> re<span style="color: #333333">.</span>sub(<span style="background-color: #e0e0ff">&#39;[?\.#_]&#39;</span>,<span style="background-color: #e0e0ff">&#39;&#39;</span>,x)
+    x <span style="color: #333333">=</span> re<span style="color: #333333">.</span>sub(<span style="background-color: #e0e0ff">&#39;[\s]+&#39;</span>,<span style="background-color: #e0e0ff">&#39; &#39;</span>,x)
+    a<span style="color: #333333">.</span>write(x<span style="color: #333333">+</span><span style="background-color: #e0e0ff">&quot;</span><span style="color: #666666; font-weight: bold; background-color: #e0e0ff">\n</span><span style="background-color: #e0e0ff">&quot;</span>)
+  y <span style="color: #333333">=</span> b<span style="color: #333333">.</span>readline()
+</pre></div>
 Now, here what <code>temp = y.split(": ",2)</code> does is breaks <code>temp</code> into an array of the form:<br>
-<pre><code>y = 13/10/13 10:20:28 pm: ABC: Python is nice
-temp[0] = 13/10/13 10:20:28 pm: ABC:
-temp[1] = Python is nice</pre></code>
-and the regex-substitute removes all emoticons and pronunciations from the message using:<br><pre><code>x = re.sub('([\:\;][\)\|\\\/dDOoPp\(\'\"][\(\)DOo]?)','',x)
-		x = re.sub('[?\.#_]','',x)
-		x = re.sub('[\s]+',' ',x)</pre></code>
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">y <span style="color: #333333">=</span> <span style="color: #6666ff; font-weight: bold">13</span><span style="color: #333333">/</span><span style="color: #6666ff; font-weight: bold">10</span><span style="color: #333333">/</span><span style="color: #6666ff; font-weight: bold">13</span> <span style="color: #6666ff; font-weight: bold">10</span>:<span style="color: #6666ff; font-weight: bold">20</span>:<span style="color: #6666ff; font-weight: bold">28</span> pm: ABC: Python <span style="color: #000000; font-weight: bold">is</span> nice
+temp[<span style="color: #6666ff; font-weight: bold">0</span>] <span style="color: #333333">=</span> <span style="color: #6666ff; font-weight: bold">13</span><span style="color: #333333">/</span><span style="color: #6666ff; font-weight: bold">10</span><span style="color: #333333">/</span><span style="color: #6666ff; font-weight: bold">13</span> <span style="color: #6666ff; font-weight: bold">10</span>:<span style="color: #6666ff; font-weight: bold">20</span>:<span style="color: #6666ff; font-weight: bold">28</span> pm: ABC:
+temp[<span style="color: #6666ff; font-weight: bold">1</span>] <span style="color: #333333">=</span> Python <span style="color: #000000; font-weight: bold">is</span> nice
+</pre></div>
+
+and the regex-substitute removes all emoticons and pronunciations from the message using:<br>
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">x <span style="color: #333333">=</span> re<span style="color: #333333">.</span>sub(<span style="background-color: #e0e0ff">&#39;([\:\;][\)\|</span><span style="color: #666666; font-weight: bold; background-color: #e0e0ff">\\</span><span style="background-color: #e0e0ff">\/dDOoPp\(</span><span style="color: #666666; font-weight: bold; background-color: #e0e0ff">\&#39;\&quot;</span><span style="background-color: #e0e0ff">][\(\)DOo]?)&#39;</span>,<span style="background-color: #e0e0ff">&#39;&#39;</span>,x)
+x <span style="color: #333333">=</span> re<span style="color: #333333">.</span>sub(<span style="background-color: #e0e0ff">&#39;[?\.#_]&#39;</span>,<span style="background-color: #e0e0ff">&#39;&#39;</span>,x)
+x <span style="color: #333333">=</span> re<span style="color: #333333">.</span>sub(<span style="background-color: #e0e0ff">&#39;[\s]+&#39;</span>,<span style="background-color: #e0e0ff">&#39; &#39;</span>,x)
+</pre></div>
+
 This seperates all the messages and the output generated is sort of like this:<br>
-<pre><code>Can Python be used to design and implement Frontend design of websites, ya only backend/server support 
-I know PHP does both, backend+frontend 
-Web2py and django frontend design kar sakte hain kya 
-I guess Django is a framework and lets u do that</pre></code>
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">Can Python be used to design <span style="color: #000000; font-weight: bold">and</span> implement Frontend design of websites, <span style="color: #000000; font-weight: bold">or</span> only backend<span style="color: #333333">/</span>server support 
+I know PHP does both, backend<span style="color: #333333">+</span>frontend 
+Web2py <span style="color: #000000; font-weight: bold">and</span> django frontend design kar sakte hain kya 
+I guess Django <span style="color: #000000; font-weight: bold">is</span> a framework <span style="color: #000000; font-weight: bold">and</span> lets u do that
+</pre></div>
+
 PS: This message is way old, like mid-2012, i was a newbie and didn't know jack about web-application development, so, Yeah..<br>
 Now, we have to calculate the number of times a date has occured. For that we will use the Python "Counter" function.<br>
-<pre><code>x = open("dates.txt",'r')
-y = x.read()
-from collections import Counter
-print Counter(y.split('\n'))</pre></code>
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">x <span style="color: #333333">=</span> <span style="color: #007722">open</span>(<span style="background-color: #e0e0ff">&quot;dates.txt&quot;</span>,<span style="background-color: #e0e0ff">&#39;r&#39;</span>)
+y <span style="color: #333333">=</span> x<span style="color: #333333">.</span>read()
+<span style="color: #228899; font-weight: bold">from</span> <span style="color: #0e84b5; font-weight: bold">collections</span> <span style="color: #228899; font-weight: bold">import</span> Counter
+<span style="color: #228899; font-weight: bold">print</span> Counter(y<span style="color: #333333">.</span>split(<span style="background-color: #e0e0ff">&#39;</span><span style="color: #666666; font-weight: bold; background-color: #e0e0ff">\n</span><span style="background-color: #e0e0ff">&#39;</span>))
+</pre></div>
 The output generated is:<br>
-<pre><code>29/04/2015 120
-23/04/2015 34
-15/04/2015 25
-29/03/2015 15
-27/04/2015 12
-25/04/2015 11
-22/04/2015 6
-30/04/2015 3
-30/03/2015 1</pre></code>
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #6666ff; font-weight: bold">29</span><span style="color: #333333">/</span><span style="color: #4400EE; font-weight: bold">04</span><span style="color: #333333">/</span><span style="color: #6666ff; font-weight: bold">2015</span> <span style="color: #6666ff; font-weight: bold">120</span>
+<span style="color: #6666ff; font-weight: bold">23</span><span style="color: #333333">/</span><span style="color: #4400EE; font-weight: bold">04</span><span style="color: #333333">/</span><span style="color: #6666ff; font-weight: bold">2015</span> <span style="color: #6666ff; font-weight: bold">34</span>
+<span style="color: #6666ff; font-weight: bold">15</span><span style="color: #333333">/</span><span style="color: #4400EE; font-weight: bold">04</span><span style="color: #333333">/</span><span style="color: #6666ff; font-weight: bold">2015</span> <span style="color: #6666ff; font-weight: bold">25</span>
+<span style="color: #6666ff; font-weight: bold">29</span><span style="color: #333333">/</span><span style="color: #4400EE; font-weight: bold">03</span><span style="color: #333333">/</span><span style="color: #6666ff; font-weight: bold">2015</span> <span style="color: #6666ff; font-weight: bold">15</span>
+<span style="color: #6666ff; font-weight: bold">27</span><span style="color: #333333">/</span><span style="color: #4400EE; font-weight: bold">04</span><span style="color: #333333">/</span><span style="color: #6666ff; font-weight: bold">2015</span> <span style="color: #6666ff; font-weight: bold">12</span>
+<span style="color: #6666ff; font-weight: bold">25</span><span style="color: #333333">/</span><span style="color: #4400EE; font-weight: bold">04</span><span style="color: #333333">/</span><span style="color: #6666ff; font-weight: bold">2015</span> <span style="color: #6666ff; font-weight: bold">11</span>
+<span style="color: #6666ff; font-weight: bold">22</span><span style="color: #333333">/</span><span style="color: #4400EE; font-weight: bold">04</span><span style="color: #333333">/</span><span style="color: #6666ff; font-weight: bold">2015</span> <span style="color: #6666ff; font-weight: bold">6</span>
+<span style="color: #6666ff; font-weight: bold">30</span><span style="color: #333333">/</span><span style="color: #4400EE; font-weight: bold">04</span><span style="color: #333333">/</span><span style="color: #6666ff; font-weight: bold">2015</span> <span style="color: #6666ff; font-weight: bold">3</span>
+<span style="color: #6666ff; font-weight: bold">30</span><span style="color: #333333">/</span><span style="color: #4400EE; font-weight: bold">03</span><span style="color: #333333">/</span><span style="color: #6666ff; font-weight: bold">2015</span> <span style="color: #6666ff; font-weight: bold">1</span>
+</pre></div>
+
 Now, to convert some simple stuff like 15 -> 2015, we will use the find-and-replace feauture of SublimeText, because it's just so awesome.
 <h2>Visualizing the Temporal Data.</h2>
 We use the Python-Matplotlib library for simple temporal printing of the message count WRT the dates.<br>
-<pre><code>import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib.dates as mdates
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #228899; font-weight: bold">import</span> <span style="color: #0e84b5; font-weight: bold">numpy</span> <span style="color: #228899; font-weight: bold">as</span> <span style="color: #0e84b5; font-weight: bold">np</span>
+<span style="color: #228899; font-weight: bold">import</span> <span style="color: #0e84b5; font-weight: bold">matplotlib.pyplot</span> <span style="color: #228899; font-weight: bold">as</span> <span style="color: #0e84b5; font-weight: bold">plt</span>
+<span style="color: #228899; font-weight: bold">import</span> <span style="color: #0e84b5; font-weight: bold">matplotlib.dates</span> <span style="color: #228899; font-weight: bold">as</span> <span style="color: #0e84b5; font-weight: bold">mdates</span>
 
-days, messages = np.loadtxt("ankit_count.csv", unpack=True,
-        converters={ 0: mdates.strpdate2num('%d/%m/%Y')})
-days2, messages2 = np.loadtxt("ABC_count.csv", unpack=True,
-        converters={ 0: mdates.strpdate2num('%d/%m/%Y')})
+days, messages <span style="color: #333333">=</span> np<span style="color: #333333">.</span>loadtxt(<span style="background-color: #e0e0ff">&quot;ankit_count.csv&quot;</span>, unpack<span style="color: #333333">=</span><span style="color: #007722">True</span>,
+        converters<span style="color: #333333">=</span>{ <span style="color: #6666ff; font-weight: bold">0</span>: mdates<span style="color: #333333">.</span>strpdate2num(<span style="background-color: #e0e0ff">&#39;</span><span style="background-color: #eeeeee">%d</span><span style="background-color: #e0e0ff">/%m/%Y&#39;</span>)})
+days2, messages2 <span style="color: #333333">=</span> np<span style="color: #333333">.</span>loadtxt(<span style="background-color: #e0e0ff">&quot;ABC_count.csv&quot;</span>, unpack<span style="color: #333333">=</span><span style="color: #007722">True</span>,
+        converters<span style="color: #333333">=</span>{ <span style="color: #6666ff; font-weight: bold">0</span>: mdates<span style="color: #333333">.</span>strpdate2num(<span style="background-color: #e0e0ff">&#39;</span><span style="background-color: #eeeeee">%d</span><span style="background-color: #e0e0ff">/%m/%Y&#39;</span>)})
+plt<span style="color: #333333">.</span>xlabel(<span style="background-color: #e0e0ff">&#39;Date&#39;</span>)
+plt<span style="color: #333333">.</span>ylabel(<span style="background-color: #e0e0ff">&#39;Message Count&#39;</span>)
+plt<span style="color: #333333">.</span>plot_date(x<span style="color: #333333">=</span>days, y<span style="color: #333333">=</span>messages,color<span style="color: #333333">=</span><span style="background-color: #e0e0ff">&#39;m&#39;</span>,label<span style="color: #333333">=</span><span style="background-color: #e0e0ff">&#39;Me&#39;</span>,linestyle<span style="color: #333333">=</span><span style="background-color: #e0e0ff">&#39;:&#39;</span>)
+plt<span style="color: #333333">.</span>plot_date(x<span style="color: #333333">=</span>days2, y<span style="color: #333333">=</span>messages2,color<span style="color: #333333">=</span><span style="background-color: #e0e0ff">&#39;c&#39;</span>,label<span style="color: #333333">=</span><span style="background-color: #e0e0ff">&#39;Friend&#39;</span>,linestyle<span style="color: #333333">=</span><span style="background-color: #e0e0ff">&#39;-.&#39;</span>)
+plt<span style="color: #333333">.</span>legend()
+plt<span style="color: #333333">.</span>show()
+</pre></div>
 
-plt.xlabel('Date')
-plt.ylabel('Message Count')
-plt.plot_date(x=days, y=messages,color='m',label='Me',linestyle=':')
-plt.plot_date(x=days2, y=messages2,color='c',label='Friend',linestyle='-.')
-plt.legend()
-plt.show()</pre></code>
 This is pretty much self-sufficient and we end up with the following outputs:<br>
 <center><img width="90%"src="2-1.jpeg"><br><img width="90%"src="2-2.jpeg"><br>
 </center>Word Cloud Generated Is:<br>
@@ -149,20 +166,12 @@ This is pretty much self-sufficient and we end up with the following outputs:<br
 </center><br>
 This is what i did, and that's about it. Find the accompanying code files on my GitHub profile: <a href="https://github.com/ankitvad/VisualizeWhatsAppChatHistory">Vizualize WhatsApp Chat History</a>.<br> Next step, vizualizing my Google History and Clustering it on the basis of title similarity.. Laters..<br>
 -Ankit Vadehra
-
-	
-
-
- 
-
-
-
   </p>
   </div>
   <div class=footer>
     <p>Blog Powered using <a href="https://github.com/ankitvad/caffeinepost">CaffeinePost</a></p>
     <p>You can find me at:</p>
-    <p><a href="http://github.com/ankitvad">GitHub</a>, <a href="http://www.linkedin.com/in/ankitvad">LinkedIn</a>, <a href="https://www.facebook.com/ankit.vadehra">Facebook</a>,<br><a href="https://plus.google.com/+AnkitVadehr%C4%81">Google+</a>, <a href="http://www.quora.com/Ankit-Vadehra">Quora</a>, <a href="http://www.twitter.com/ankitvad">Twitter</a></p>
+    <p><a href="http://github.com/ankitvad">GitHub</a>, <a href="http://www.linkedin.com/in/ankitvad">LinkedIn</a>, <a href="https://www.facebook.com/ankit.vadehra">Facebook</a>,<br><a href="http://www.twitter.com/ankitvad">Twitter</a></p>
   </div>
   </div>
   </body>

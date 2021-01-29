@@ -31,7 +31,6 @@ div.navigation ul           { margin: 0; padding: 0; list-style: none; }
 div.navigation ul li        { display: inline; margin: 0 2px; padding: 0; }
 div.body                    { clear: both; }
 div.footer                  { margin-top: 55px; font-size: 16px;
-  border-top: 2px solid #f1f1f1;
                               text-align: right; color: #76A4B8; }
 div.footer p                { margin: 0; }
 div.footer a                { color: #76A4B8; }
@@ -64,6 +63,17 @@ table.footnote td       { border: none; padding: 9px 0 0 0; font-size: 15px; }
 table.footnote td.label { padding-right: 10px; }
 table.footnote td p     { margin: 0; }
 table.footnote td p + p { margin-top: 15px; }
+
+div.entry-wrapper p{
+	font-family: Raleway;
+	margin-left: 1.66%;
+	font-size: 23px;
+	font-weight: 800;
+	text-transform: uppercase;
+	border-bottom: 2px solid #f1f1f1;
+	width: 30%;
+	padding-bottom: 20px;
+}
 
 /* blog overview */
 div.entry-overview                  { margin: 25px 122px 25px 102px; }
@@ -106,4 +116,21 @@ div.adspace {
 div.adspace iframe {
     margin: 25px auto 25px auto;
 }
+
+
+img {
+	width: 30%;
+	float: left;
+	margin: 1.66%;
+}
+
+div.footer {
+       position: absolute;
+       bottom: 0;
+       right: 50px;
+       height: 60px;
+       border-top-width: 2px;
+       border-top-style: solid;
+       border-top-color: #f1f1f1;
+    }
 
