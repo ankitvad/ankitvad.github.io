@@ -71,7 +71,7 @@ div.entry-wrapper p{
 	font-weight: 800;
 	text-transform: uppercase;
 	border-bottom: 2px solid #f1f1f1;
-	width: 30%;
+	width: 80%;
 	padding-bottom: 20px;
 }
 
@@ -125,12 +125,11 @@ img {
 }
 
 div.footer {
-       position: absolute;
        bottom: 0;
        right: 50px;
        height: 60px;
-       border-top-width: 2px;
-       border-top-style: solid;
-       border-top-color: #f1f1f1;
+       border-top: 2px solid #f1f1f1;
+       text-align: right;
+       color: #76A4B8;
     }
 
