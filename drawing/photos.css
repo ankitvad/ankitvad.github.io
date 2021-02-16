@@ -29,11 +29,7 @@ div.navigation              { float: right; }
 div.header, div.navigation  { height: 25px; margin-bottom: 42px; }
 div.navigation ul           { margin: 0; padding: 0; list-style: none; }
 div.navigation ul li        { display: inline; margin: 0 2px; padding: 0; }
-div.body                    { clear: both; }
-div.footer                  { margin-top: 55px; font-size: 16px;
-                              text-align: right; color: #76A4B8; }
-div.footer p                { margin: 0; }
-div.footer a                { color: #76A4B8; }
+div.body                    { clear: both; padding-bottom:60px;}
 
 /* margins and stuff */
 p, div.line-block, ul, ol, pre,
@@ -124,12 +120,22 @@ img {
 	margin: 1.66%;
 }
 
-div.footer {
-       bottom: 0;
-       right: 50px;
-       height: 60px;
-       border-top: 2px solid #f1f1f1;
-       text-align: right;
-       color: #76A4B8;
-    }
 
+body {
+  position: relative;
+  min-height: 100%;
+  min-height: 100vh;
+}
+footer {
+    float: right;
+    height: 100px;
+    margin: 5px -15px 0px 0px;
+    color: #76A4B8;
+    text-align: right;
+    padding: 5px 10px;
+    width: 400px;
+    border-top: 2px solid #f1f1f1;
+    font-size: 16px;
+}
+.footer p                { margin: 0; }
+.footer a                { color: #76A4B8; }
