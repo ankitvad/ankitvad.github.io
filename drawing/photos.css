@@ -126,7 +126,7 @@ body {
   min-height: 100%;
   min-height: 100vh;
 }
-footer {
+div.footer {
     float: right;
     height: 100px;
     margin: 5px -15px 0px 0px;
@@ -137,5 +137,5 @@ footer {
     border-top: 2px solid #f1f1f1;
     font-size: 16px;
 }
-footer p                { margin: 0; }
-footer a                { color: #76A4B8; }
+div.footer p                { margin: 0; }
+div.footer a                { color: #76A4B8; }
